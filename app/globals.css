@@ -1,8 +1,17 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
 :root {
   color-scheme: light;
   --blue: #569fdf;
   --blue-deep: #326c9b;
   --navy: #19364f;
+  --sage: #4fa892;
+  --sage-deep: #3d8c78;
+  --sage-soft: #e1f5ef;
+  --sage-mist: #c8e8de;
   --text: #536575;
   --muted: #637586;
   --paper: #fcfcfa;
@@ -58,6 +67,49 @@ summary {
   background: #d8e8f7;
 }
 
+/* Scroll reveal — matched to jainpainclinic.com */
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
+  opacity: 0;
+  transition:
+    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal {
+  transform: translateY(36px);
+}
+.reveal-left {
+  transform: translateX(-40px);
+}
+.reveal-right {
+  transform: translateX(40px);
+}
+.reveal-scale {
+  transform: scale(0.92);
+}
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible,
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 {
+  transition-delay: 0.15s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.45s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.6s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -65,5 +117,15 @@ summary {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
 }

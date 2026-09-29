@@ -1,24 +1,153 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, ClipboardCheck, HeartPulse, Phone, Stethoscope } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  ClipboardCheck,
+  Crosshair,
+  Droplets,
+  Phone,
+  Quote,
+  Ribbon,
+  Scan,
+  Sparkles,
+  Stethoscope,
+  Wind,
+} from "lucide-react";
 import styles from "./HomeSections.module.css";
+import SiteFooter from "./SiteFooter";
+import AppointmentSection from "./AppointmentSection";
 
-const site = "https://canceronco.in";
 
 const concerns = [
-  { title: "I have a new diagnosis", detail: "Understand your diagnosis, staging and treatment options with a clear plan." },
-  { title: "I need a second opinion", detail: "Bring your reports for an independent review and a considered next step." },
-  { title: "I am in active treatment", detail: "Get support with chemotherapy, immunotherapy, targeted therapy and follow-up." },
-  { title: "I am worried about a symptom", detail: "Share what you are experiencing so we can guide you toward the right care." },
+  {
+    title: "New cancer diagnosis",
+    detail: "Clarity on staging, treatment options and what the next few weeks may involve.",
+    aside: "A first consultation can help turn a new diagnosis into a clear, practical plan.",
+    details: [
+      {
+        prompt: "What would you like explained first?",
+        options: ["What the diagnosis means", "Staging and tests", "Treatment choices", "What to expect next"],
+      },
+      {
+        prompt: "What reports do you already have?",
+        options: ["Biopsy / pathology", "Scans or imaging", "Both reports and scans", "Still waiting for reports"],
+      },
+    ],
+  },
+  {
+    title: "Second opinion",
+    detail: "An independent review of existing reports and recommendations, with clearer choices.",
+    aside: "A second opinion can confirm the plan — or open other options worth considering.",
+    details: [
+      {
+        prompt: "What prompted the second opinion?",
+        options: ["Confirm a recommended plan", "Compare treatment options", "Review complex reports", "Family asked for another view"],
+      },
+      {
+        prompt: "What would you like reviewed first?",
+        options: ["Diagnosis accuracy", "Treatment recommendation", "Surgery vs medical therapy", "Side-effect concerns"],
+      },
+    ],
+  },
+  {
+    title: "Ongoing treatment support",
+    detail: "Guidance during chemotherapy, immunotherapy, targeted therapy or follow-up care.",
+    aside: "Bring questions about your current plan — we will focus on what matters most right now.",
+    details: [
+      {
+        prompt: "Where are you in treatment?",
+        options: ["About to start", "Midway through cycles", "Near completion", "On follow-up / maintenance"],
+      },
+      {
+        prompt: "What do you need help with most?",
+        options: ["Side effects", "Dose or schedule questions", "Treatment response", "Next treatment decisions"],
+      },
+    ],
+  },
+  {
+    title: "Symptom or health concern",
+    detail: "Guidance on a symptom and whether it needs specialist oncology review.",
+    aside: "Share what you are noticing so we can guide you toward the right next step.",
+    details: [
+      {
+        prompt: "What is the main concern?",
+        options: ["New or persistent pain", "Unexplained weight loss", "Lump or swelling", "Other worrying symptom"],
+      },
+      {
+        prompt: "How long has this been going on?",
+        options: ["Less than 2 weeks", "2–6 weeks", "More than 6 weeks", "Not sure"],
+      },
+    ],
+  },
 ];
 
 const treatmentGroups = [
-  { label: "Breast cancer", slug: "breast-cancer", text: "Thoughtful, evidence-based care across diagnosis, surgery and systemic treatment." },
-  { label: "Blood cancer", slug: "blood-cancer", text: "Personalised treatment planning for lymphoma, myeloma and leukaemia." },
-  { label: "Lung cancer", slug: "lungs-cancer", text: "A multidisciplinary approach that connects testing, treatment and ongoing support." },
-  { label: "Immunotherapy", slug: "immunotherapy", text: "Explore newer therapies and understand where they may fit into your care." },
+  {
+    label: "Breast cancer",
+    slug: "breast-cancer",
+    text: "Thoughtful, evidence-based care across diagnosis, surgery and systemic treatment — explained at your pace.",
+    focus: "Breast tumours",
+    approach: "Personalised systemic care",
+    image: "/images/treatments/breast-cancer.jpg",
+    imageAlt: "Doctor discussing care options with a patient",
+    Icon: Ribbon,
+  },
+  {
+    label: "Blood cancer",
+    slug: "blood-cancer",
+    text: "Personalised treatment planning for lymphoma, myeloma and leukaemia, with clear next steps at every stage.",
+    focus: "Lymphoma, myeloma, leukaemia",
+    approach: "Targeted & chemo pathways",
+    image: "/images/treatments/blood-cancer.jpg",
+    imageAlt: "Laboratory research supporting blood cancer care",
+    Icon: Droplets,
+  },
+  {
+    label: "Lung cancer",
+    slug: "lung-cancer",
+    text: "A multidisciplinary approach that connects testing, treatment and ongoing support for lung cancer care.",
+    focus: "Lung tumours",
+    approach: "Diagnosis to follow-up",
+    image: "/images/treatments/lung-cancer.jpg",
+    imageAlt: "Medical professional reviewing lung health imaging",
+    Icon: Wind,
+  },
+  {
+    label: "Head & neck cancer",
+    slug: "head-neck-cancer",
+    text: "Care for cancers of the head and neck, with a clear plan that balances treatment goals and quality of life.",
+    focus: "Head & neck tumours",
+    approach: "Multidisciplinary planning",
+    image: "/images/treatments/head-neck-cancer.jpg",
+    imageAlt: "Specialist reviewing head and neck care options",
+    Icon: Scan,
+  },
+  {
+    label: "Immunotherapy",
+    slug: "immunotherapy",
+    text: "Explore newer therapies that help the immune system recognise cancer, and understand where they may fit into your care.",
+    focus: "Immune-based treatment",
+    approach: "Evidence-led planning",
+    image: "/images/treatments/immunotherapy.jpg",
+    imageAlt: "Modern medical science supporting immunotherapy care",
+    Icon: Sparkles,
+  },
+  {
+    label: "Targeted therapy",
+    slug: "targeted-therapy",
+    text: "Precision treatments guided by tumour biology — helping you understand when a targeted option may be right.",
+    focus: "Molecularly guided care",
+    approach: "Precision oncology",
+    image: "/images/treatments/targeted-therapy.jpg",
+    imageAlt: "Precision medicine and targeted therapy research",
+    Icon: Crosshair,
+  },
 ];
 
 const faqs = [
@@ -28,58 +157,495 @@ const faqs = [
   ["Where does Dr. Dhar consult?", "Dr. Dhar consults at Marengo Asia Hospitals, Gurugram. The clinic team can confirm available appointments and directions."],
 ];
 
+const trustStats = [
+  { value: "35+", label: "Years of experience" },
+  { value: "20,000+", label: "Happy patients" },
+  { value: "5,000+", label: "Successful treatments" },
+];
+
+const testimonials = [
+  {
+    quote:
+      "After my diagnosis, every conversation felt hurried — until we met Dr. Dhar. He explained staging and options in plain language, and for the first time I felt I could breathe and decide.",
+    name: "Ananya S.",
+    place: "Gurugram",
+    context: "Breast cancer care",
+  },
+  {
+    quote:
+      "We came for a second opinion on a complex report. He reviewed everything carefully, confirmed what mattered, and helped us see a clearer path forward.",
+    name: "Rajesh M.",
+    place: "Delhi",
+    context: "Second opinion",
+  },
+  {
+    quote:
+      "Immunotherapy was new to us. Dr. Dhar never rushed the questions — about side effects, timing, and what to expect next. That patience made the whole journey less frightening.",
+    name: "Fatima K.",
+    place: "Noida",
+    context: "Immunotherapy",
+  },
+  {
+    quote:
+      "During lymphoma treatment, I needed honest answers more than reassurance. He gave both — with a plan that felt personal, not generic.",
+    name: "Vikram P.",
+    place: "Gurugram",
+    context: "Blood cancer care",
+  },
+  {
+    quote:
+      "Midway through chemotherapy I had so many doubts. The clinic team and Dr. Dhar helped me understand dose changes and what was normal — I never felt left alone between visits.",
+    name: "Meera D.",
+    place: "Faridabad",
+    context: "Ongoing treatment",
+  },
+];
+
 export default function HomeSections() {
   const [concern, setConcern] = useState<number | null>(null);
+  const [detailAnswers, setDetailAnswers] = useState<[number | null, number | null]>([null, null]);
   const [step, setStep] = useState(1);
   const [treatment, setTreatment] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [testimonial, setTestimonial] = useState(0);
+  const [testimonialPaused, setTestimonialPaused] = useState(false);
+  const active = treatmentGroups[treatment];
+  const ActiveIcon = active.Icon;
+  const activeConcern = concern !== null ? concerns[concern] : null;
+  const step2Ready = detailAnswers[0] !== null && detailAnswers[1] !== null;
+  const activeTestimonial = testimonials[testimonial];
+
+  useEffect(() => {
+    if (testimonialPaused) return;
+    const id = window.setInterval(() => {
+      setTestimonial((current) => (current + 1) % testimonials.length);
+    }, 5500);
+    return () => window.clearInterval(id);
+  }, [testimonialPaused, testimonial]);
+
+  const goToTestimonial = (index: number) => {
+    setTestimonial((index + testimonials.length) % testimonials.length);
+  };
+
+  const resetFinder = () => {
+    setStep(1);
+    setConcern(null);
+    setDetailAnswers([null, null]);
+  };
+
+  const selectConcern = (index: number) => {
+    setConcern(index);
+    setDetailAnswers([null, null]);
+  };
 
   return (
     <>
       <section className={styles.introSection} aria-labelledby="intro-title">
         <div className={`${styles.container} ${styles.doctorProfile}`}>
-          <div className={styles.profileVisual}>
+          <div className={`${styles.profileVisual} reveal-left`}>
             <Image src="/images/dr-ak-dhar-consultation.png" alt="Dr. (Brig.) A. K. Dhar in his clinic coat" width={787} height={802} sizes="(max-width: 700px) 82vw, 430px" />
             <div className={styles.profileQuote}><span>“</span><p>Clarity in every conversation.<br />Confidence in every next step.</p></div>
           </div>
-          <div className={styles.profileCopy}>
+          <div className={`${styles.profileCopy} reveal-right`}>
             <span className={styles.sectionKicker}>ABOUT THE DOCTOR</span>
             <h2 id="intro-title">A trusted name in cancer care.</h2>
             <p className={styles.profileLead}>Dr. (Brig.) A. K. Dhar is a senior medical oncologist with more than 35 years of experience caring for people with cancer.</p>
             <p>As Clinical Director and Head of Medical Oncology at Marengo Asia Hospitals, he brings together deep expertise, honest guidance and the patience to make complex decisions feel clearer.</p>
             <ul className={styles.profileHighlights}><li><Check size={16} />35+ years in medical oncology</li><li><Check size={16} />Clinical Director &amp; Head, Medical Oncology</li><li><Check size={16} />Care for solid tumours and blood cancers</li><li><Check size={16} />Marengo Asia Hospitals, Gurugram</li></ul>
             <div className={styles.profileSignature}><strong>Dr. (Brig.) A. K. Dhar</strong><span>Medical Oncologist &amp; Cancer Specialist</span></div>
-            <a className={styles.profileButton} href={`${site}/about/`}>More about Dr. Dhar <ArrowRight size={17} /></a>
+            <a className={styles.profileButton} href="/about">More about Dr. Dhar <ArrowRight size={17} /></a>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.statsBreak} aria-label="Practice highlights">
+        <div className={`${styles.container} ${styles.statsGrid}`}>
+          {trustStats.map((stat, index) => (
+            <div key={stat.label} className={`${styles.statItem} reveal-scale reveal-delay-${index + 1}`}>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.treatmentSection} aria-labelledby="treatment-title">
+        <div className={styles.container}>
+          <div className={`${styles.treatmentIntro} reveal`}>
+            <div>
+              <span className={styles.sectionKicker}>01 / CARE THAT&apos;S RIGHT FOR YOU</span>
+              <h2 id="treatment-title">Every diagnosis is different.<br /><em>Your care should be, too.</em></h2>
+            </div>
+            <div className={styles.treatmentIntroCopy}>
+              <p>From prevention to complex pathways, understand your options at your own pace.</p>
+              <a className={styles.textLink} href="/treatments">View all treatments <span><ArrowUpRight size={16} /></span></a>
+            </div>
+          </div>
+
+          <div className={`${styles.treatmentCard} reveal reveal-delay-1`}>
+            <div className={styles.treatmentTabs} role="tablist" aria-label="Treatment pathways">
+              {treatmentGroups.map((item, index) => {
+                const Icon = item.Icon;
+                const selected = treatment === index;
+                return (
+                  <button
+                    key={item.slug}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    className={selected ? styles.activeTreatment : undefined}
+                    onClick={() => setTreatment(index)}
+                  >
+                    <Icon size={18} strokeWidth={1.6} />
+                    <span className={styles.tabLabel}>{item.label}</span>
+                    {selected ? <ArrowRight size={16} /> : <ArrowUpRight size={16} />}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className={styles.treatmentVisual}>
+              <Image
+                key={active.image}
+                src={active.image}
+                alt={active.imageAlt}
+                fill
+                sizes="(max-width: 900px) 90vw, 360px"
+                className={styles.treatmentImage}
+              />
+            </div>
+
+            <div className={styles.treatmentPanel} role="tabpanel">
+              <div key={active.slug} className={styles.treatmentPanelInner}>
+                <span className={styles.panelKicker}>{String(treatment + 1).padStart(2, "0")} / SPECIALIST CARE</span>
+                <h3>
+                  <ActiveIcon size={24} strokeWidth={1.5} />
+                  {active.label}
+                </h3>
+                <p>{active.text}</p>
+                <div className={styles.treatmentMeta}>
+                  <div>
+                    <small>Focus</small>
+                    <strong>{active.focus}</strong>
+                  </div>
+                  <div>
+                    <small>Approach</small>
+                    <strong>{active.approach}</strong>
+                  </div>
+                </div>
+                <a className={styles.treatmentExplore} href={`/treatments/${active.slug}/`}>
+                  Explore this treatment
+                  <span aria-hidden="true"><ArrowRight size={16} strokeWidth={1.8} /></span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className={styles.finderSection} aria-labelledby="finder-title">
         <div className={`${styles.container} ${styles.finderWrap}`}>
-          <div className={styles.finderHeading}><span className={styles.sectionKicker}>A SIMPLE STARTING POINT</span><h2 id="finder-title">Not sure what care you need?</h2><p>Tell us what feels most important. We will help you find the right place to begin.</p></div>
-          <div className={styles.finderGrid}>
+          <div className={`${styles.finderHeading} reveal`}>
+            <span className={styles.sectionKicker}>02 / FIND YOUR STARTING POINT</span>
+            <h2 id="finder-title">Not sure what care you need?</h2>
+            <p>Answer a few short questions. We will help you find the right place to begin.</p>
+          </div>
+
+          <div className={`${styles.finderGrid} reveal reveal-delay-1`}>
             <div className={styles.finderCard}>
-              <div className={styles.finderTop}><span>Step {step} of 3</span><button onClick={() => setStep(1)}>Start over</button></div>
-              <div className={styles.progress}><span style={{ width: `${step * 33.33}%` }} /></div>
-              {step === 1 && <><h3>What are you mainly concerned about?</h3><div className={styles.concerns}>{concerns.map((item, index) => <button key={item.title} className={concern === index ? styles.selectedConcern : ""} onClick={() => setConcern(index)}>{item.title}<span>{concern === index ? <Check size={17} /> : <ArrowRight size={16} />}</span></button>)}</div></>}
-              {step === 2 && <div className={styles.stepMessage}><HeartPulse size={34} /><h3>Thank you for sharing that.</h3><p>We will review your concern and help you prepare for a focused consultation.</p></div>}
-              {step === 3 && <div className={styles.stepMessage}><ClipboardCheck size={34} /><h3>Your next step is ready.</h3><p>Book a consultation and bring any reports you already have. Our team will guide you from there.</p></div>}
-              <div className={styles.finderActions}>{step > 1 && <button className={styles.backButton} onClick={() => setStep(step - 1)}>Back</button>}<button className={styles.continueButton} disabled={step === 1 && concern === null} onClick={() => setStep(Math.min(3, step + 1))}>{step === 3 ? "Book a consultation" : "Continue"}<ArrowUpRight size={17} /></button></div>
+              <div className={styles.finderTop}>
+                <span>Step {step} of 3</span>
+                <button type="button" onClick={resetFinder}>
+                  Start over
+                </button>
+              </div>
+              <div className={styles.progress} aria-hidden="true">
+                <span style={{ width: `${step * 33.33}%` }} />
+              </div>
+
+              <div className={styles.finderBody}>
+                <div
+                  className={step === 1 ? undefined : styles.finderSizer}
+                  aria-hidden={step !== 1}
+                >
+                  <h3>What brings you here today?</h3>
+                  <div className={styles.concerns}>
+                    {concerns.map((item, index) => (
+                      <button
+                        key={item.title}
+                        type="button"
+                        tabIndex={step === 1 ? undefined : -1}
+                        className={concern === index ? styles.selectedConcern : undefined}
+                        onClick={() => selectConcern(index)}
+                      >
+                        <span className={styles.concernCopy}>
+                          <strong>{item.title}</strong>
+                          <small>{item.detail}</small>
+                        </span>
+                        <span className={styles.concernIcon}>
+                          {concern === index ? <Check size={17} strokeWidth={2.2} /> : <ArrowRight size={16} />}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {step === 2 && activeConcern && (
+                  <div className={styles.finderOverlay}>
+                    <div className={styles.detailStep}>
+                      <h3>A few details will help</h3>
+                      {activeConcern.details.map((group, groupIndex) => (
+                        <div key={group.prompt} className={styles.detailGroup}>
+                          <p className={styles.detailPrompt}>{group.prompt}</p>
+                          <div className={styles.detailOptions}>
+                            {group.options.map((option, optionIndex) => (
+                              <button
+                                key={option}
+                                type="button"
+                                className={detailAnswers[groupIndex] === optionIndex ? styles.selectedDetail : undefined}
+                                onClick={() => {
+                                  const next: [number | null, number | null] = [...detailAnswers];
+                                  next[groupIndex] = optionIndex;
+                                  setDetailAnswers(next);
+                                }}
+                              >
+                                {option}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div className={styles.finderOverlay}>
+                    <div className={styles.stepMessage}>
+                      <ClipboardCheck size={34} strokeWidth={1.4} />
+                      <h3>Your next step is ready.</h3>
+                      <p>
+                        Book a consultation
+                        {activeConcern ? ` for ${activeConcern.title.toLowerCase()}` : ""}. Bring any scans, pathology reports or prescriptions you already have — our team will guide you from there.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.finderActions}>
+                {step > 1 && (
+                  <button type="button" className={styles.backButton} onClick={() => setStep(step - 1)}>
+                    Back
+                  </button>
+                )}
+                {step === 3 ? (
+                  <a className={styles.continueButton} href="/contact">
+                    Book a consultation <ArrowUpRight size={17} />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    className={styles.continueButton}
+                    disabled={(step === 1 && concern === null) || (step === 2 && !step2Ready)}
+                    onClick={() => setStep(Math.min(3, step + 1))}
+                  >
+                    Continue <ArrowUpRight size={17} />
+                  </button>
+                )}
+              </div>
             </div>
-            <aside className={styles.finderAside}><div className={styles.asideCard}><div className={styles.iconBubble}><Stethoscope size={22} /></div><h3>{concern === null ? "A calm, considered next step." : concerns[concern].title}</h3><p>{concern === null ? "You do not have to navigate a diagnosis alone. Start with the question that is on your mind." : concerns[concern].detail}</p><a href={`${site}/contact/`}>Know more <ArrowRight size={16} /></a></div><div className={styles.nextCard}><span>What happens next?</span><p><i>1</i> Share symptoms or reports</p><p><i>2</i> Doctor reviews the concern</p><p><i>3</i> Get a clear treatment plan</p></div><a className={styles.helpCard} href="tel:+919810818266"><Phone size={21} /><span><strong>Need help right now?</strong><small>Call the clinic team</small></span><ArrowRight size={18} /></a></aside>
+
+            <aside className={styles.finderAside}>
+              <div className={styles.asideCard}>
+                <div className={styles.iconBubble}>
+                  <Stethoscope size={22} strokeWidth={1.5} />
+                </div>
+                <h3>{activeConcern ? activeConcern.title : "A calm, considered next step."}</h3>
+                <p>
+                  {activeConcern
+                    ? activeConcern.aside
+                    : "You do not have to navigate cancer care alone. Start with the question that is on your mind."}
+                </p>
+                <a href="/contact">
+                  Know more <ArrowRight size={16} />
+                </a>
+              </div>
+
+              <div className={styles.nextCard}>
+                <span>What happens next?</span>
+                <p><i>1</i> Share symptoms or reports</p>
+                <p><i>2</i> Doctor reviews the concern</p>
+                <p><i>3</i> Get a clear treatment plan</p>
+              </div>
+
+              <a className={styles.helpCard} href="tel:+919810818266">
+                <Phone size={21} strokeWidth={1.5} />
+                <span>
+                  <strong>Need help right now?</strong>
+                  <small>Call the clinic team</small>
+                </span>
+                <ArrowRight size={18} />
+              </a>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className={styles.treatmentSection} aria-labelledby="treatment-title"><div className={styles.container}><div className={styles.sectionHeader}><div><span className={styles.sectionKicker}>TREATMENT OPTIONS</span><h2 id="treatment-title">Care designed around you.</h2></div><a className={styles.textLink} href={`${site}/treatments/`}>View all treatments <ArrowUpRight size={17} /></a></div><div className={styles.treatmentGrid}><div className={styles.treatmentTabs}>{treatmentGroups.map((item, index) => <button key={item.label} className={treatment === index ? styles.activeTreatment : ""} onClick={() => setTreatment(index)}><span>{String(index + 1).padStart(2, "0")}</span>{item.label}<ArrowRight size={17} /></button>)}</div><div className={styles.treatmentPanel}><span className={styles.panelNumber}>0{treatment + 1}</span><h3>{treatmentGroups[treatment].label}</h3><p>{treatmentGroups[treatment].text}</p><a href={`${site}/${treatmentGroups[treatment].slug}/`}>Explore this care pathway <ArrowUpRight size={17} /></a></div></div></div></section>
+      <section className={styles.testimonialsSection} aria-labelledby="testimonials-title">
+        <div className={styles.container}>
+          <div className={`${styles.testimonialsHeader} reveal`}>
+            <div>
+              <span className={styles.sectionKicker}>03 / PATIENT STORIES</span>
+              <h2 id="testimonials-title">
+                Words from people
+                <br />
+                <em>we&apos;ve walked with.</em>
+              </h2>
+            </div>
+            <a className={styles.textLink} href="/contact">
+              Share your experience
+              <span aria-hidden="true">
+                <ArrowRight size={16} />
+              </span>
+            </a>
+          </div>
 
-      <section className={styles.processSection} aria-labelledby="process-title"><div className={styles.container}><div className={styles.processIntro}><span className={styles.sectionKicker}>YOUR CONSULTATION</span><h2 id="process-title">Care is a journey we take together.</h2><p>From your first conversation to follow-up, every decision is explained in a way that helps you move forward with confidence.</p></div><div className={styles.processSteps}><div><span>01</span><strong>Listen</strong><p>We understand your history, concerns and goals.</p></div><div><span>02</span><strong>Understand</strong><p>We explain your reports and treatment choices clearly.</p></div><div><span>03</span><strong>Plan</strong><p>We create a practical, personalised care plan.</p></div></div></div></section>
+          <div
+            className={`${styles.testimonialStage} reveal reveal-delay-1`}
+            onMouseEnter={() => setTestimonialPaused(true)}
+            onMouseLeave={() => setTestimonialPaused(false)}
+          >
+            <aside className={styles.testimonialPanel} aria-hidden="true">
+              <Quote size={36} strokeWidth={1.4} />
+              <p>Care that makes a difference.</p>
+              <small>Individual experiences. Personal journeys.</small>
+            </aside>
 
-      <section className={styles.faqSection} aria-labelledby="faq-title"><div className={styles.container}><div className={styles.faqGrid}><div><span className={styles.sectionKicker}>COMMON QUESTIONS</span><h2 id="faq-title">You can ask anything.</h2><p>We believe an informed patient is an empowered patient. Here are a few questions people often bring to their first visit.</p><a className={styles.textLink} href={`${site}/contact/`}>Ask the clinic team <ArrowRight size={17} /></a></div><div className={styles.faqList}>{faqs.map(([question, answer], index) => <div className={styles.faqItem} key={question}><button onClick={() => setOpenFaq(openFaq === index ? null : index)} aria-expanded={openFaq === index}>{question}<ChevronDown size={18} /></button>{openFaq === index && <p>{answer}</p>}</div>)}</div></div></div></section>
+            <div className={styles.testimonialMain}>
+              <div className={styles.testimonialViewport}>
+                <div className={styles.testimonialSizer} aria-hidden="true">
+                  {testimonials.map((item) => (
+                    <div key={item.name} className={styles.testimonialSlide}>
+                      <span className={styles.testimonialContext}>{item.context}</span>
+                      <blockquote>{item.quote}</blockquote>
+                      <div className={styles.testimonialAuthor}>
+                        <strong>{item.name}</strong>
+                        <span>{item.place}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.testimonialActive}>
+                  <div key={activeTestimonial.name} className={styles.testimonialSlide}>
+                    <span className={styles.testimonialContext}>{activeTestimonial.context}</span>
+                    <blockquote>{activeTestimonial.quote}</blockquote>
+                    <div className={styles.testimonialAuthor}>
+                      <strong>{activeTestimonial.name}</strong>
+                      <span>{activeTestimonial.place}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-      <section className={styles.ctaSection}><div className={styles.container}><div className={styles.ctaCard}><div><span className={styles.sectionKicker}>READY WHEN YOU ARE</span><h2>Let&apos;s take the next step together.</h2><p>Book a consultation with Dr. A. K. Dhar or speak with the clinic team about your concern.</p></div><a className={styles.ctaButton} href={`${site}/contact/`}>Book an appointment <ArrowUpRight size={18} /></a></div></div></section>
+              <div className={styles.testimonialControls}>
+                <div className={styles.testimonialNav}>
+                  <button
+                    type="button"
+                    aria-label="Previous testimonial"
+                    onClick={() => goToTestimonial(testimonial - 1)}
+                  >
+                    <ArrowLeft size={18} strokeWidth={1.8} />
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.testimonialNext}
+                    aria-label="Next testimonial"
+                    onClick={() => goToTestimonial(testimonial + 1)}
+                  >
+                    <ArrowRight size={18} strokeWidth={1.8} />
+                  </button>
+                  <span>
+                    {testimonial + 1} / {testimonials.length}
+                  </span>
+                </div>
 
-      <footer className={styles.footer}><div className={`${styles.container} ${styles.footerGrid}`}><div><span className={styles.footerBrand}>Dr. A. K. <strong>Dhar.</strong></span><p>Medical oncology care with clarity, experience and empathy.</p></div><div><span>CONTACT</span><a href="tel:+919810818266">+91 98108 18266</a><a href="mailto:info@canceronco.in">info@canceronco.in</a></div><div><span>CLINIC</span><p>Marengo Asia Hospitals<br />Gurugram, Haryana</p></div></div><div className={`${styles.container} ${styles.footerBottom}`}><span>© {new Date().getFullYear()} Dr. A. K. Dhar</span><span>Medical oncology · Gurugram & Delhi NCR</span></div></footer>
+                <div className={styles.testimonialDots} role="tablist" aria-label="Testimonials">
+                  {testimonials.map((item, index) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      role="tab"
+                      aria-selected={testimonial === index}
+                      aria-label={`Show testimonial from ${item.name}`}
+                      className={testimonial === index ? styles.activeDot : undefined}
+                      onClick={() => goToTestimonial(index)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.faqSection} aria-labelledby="faq-title">
+        <div className={styles.container}>
+          <div className={styles.faqGrid}>
+            <div className={`${styles.faqIntro} reveal-left`}>
+              <span className={styles.sectionKicker}>COMMON QUESTIONS</span>
+              <h2 id="faq-title">
+                You can ask
+                <br />
+                <em>anything.</em>
+              </h2>
+              <p>We believe an informed patient is an empowered patient. Here are a few questions people often bring to their first visit.</p>
+              <a className={styles.faqCta} href="/contact">
+                Ask the clinic team
+                <ArrowRight size={17} />
+              </a>
+            </div>
+            <div className={`${styles.faqList} reveal-right`}>
+              {faqs.map(([question, answer], index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    className={`${styles.faqItem}${isOpen ? ` ${styles.faqItemOpen}` : ""}`}
+                    key={question}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-panel-${index}`}
+                      id={`faq-button-${index}`}
+                    >
+                      <span className={styles.faqIndex}>{String(index + 1).padStart(2, "0")}</span>
+                      <span className={styles.faqQuestion}>{question}</span>
+                      <ChevronDown size={18} />
+                    </button>
+                    <div
+                      id={`faq-panel-${index}`}
+                      role="region"
+                      aria-labelledby={`faq-button-${index}`}
+                      className={styles.faqAnswer}
+                      data-open={isOpen ? "true" : "false"}
+                    >
+                      <div className={styles.faqAnswerInner}>
+                        <p>{answer}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <AppointmentSection />
+
+      <SiteFooter />
     </>
   );
 }
