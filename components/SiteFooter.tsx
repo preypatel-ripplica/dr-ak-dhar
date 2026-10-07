@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import styles from "./HomeSections.module.css";
+import { useI18n } from "./I18nProvider";
 
 const footerTreatments = [
   ["Breast cancer", "breast-cancer"],
@@ -34,6 +36,8 @@ const socialLinks = [
 ];
 
 export default function SiteFooter() {
+  const { t, localizeHref } = useI18n();
+
   return (
     <footer className={styles.footer}>
       <div className={`${styles.container} ${styles.footerGrid}`}>
@@ -41,8 +45,8 @@ export default function SiteFooter() {
           <span className={styles.footerBrand}>
             Dr. A. K. <strong>Dhar.</strong>
           </span>
-          <p>Medical oncology care with clarity, experience and empathy at Marengo Asia Hospitals, Gurugram.</p>
-          <div className={styles.footerSocial} aria-label="Social media">
+          <p>{t("Medical oncology care with clarity, experience and empathy at Marengo Asia Hospitals, Gurugram.")}</p>
+          <div className={styles.footerSocial} aria-label={t("Social media")}>
             {socialLinks.map(({ label, href, Icon }) => (
               <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}>
                 <Icon size={16} strokeWidth={1.7} />
@@ -50,13 +54,13 @@ export default function SiteFooter() {
             ))}
           </div>
           <div className={styles.footerAddress}>
-            <span>Address</span>
+            <span>{t("Address")}</span>
             <a
               href="https://www.google.com/maps/search/?api=1&query=Marengo+Asia+Hospitals+Sector+56+Gurugram"
               target="_blank"
               rel="noreferrer"
             >
-              Marengo Asia Hospitals, Gurugram
+              {t("Marengo Asia Hospitals, Gurugram")}
               <ArrowUpRight size={13} />
             </a>
             <a href="mailto:info@canceronco.in">info@canceronco.in</a>
@@ -64,35 +68,36 @@ export default function SiteFooter() {
           </div>
         </div>
         <div className="reveal reveal-delay-1">
-          <span>Treatments</span>
+          <span>{t("Treatments")}</span>
           {footerTreatments.map(([label, slug]) => (
-            <a key={slug} href={`/treatments/${slug}`}>
-              {label}
-            </a>
+            <Link key={slug} href={localizeHref(`/treatments/${slug}`)}>
+              {t(label)}
+            </Link>
           ))}
         </div>
         <div className="reveal reveal-delay-2">
-          <span>Explore</span>
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/treatments">All treatments</a>
-          <a href="/blogs">Blogs</a>
-          <a href="/contact">Contact</a>
+          <span>{t("Explore")}</span>
+          <Link href={localizeHref("/")}>{t("Home")}</Link>
+          <Link href={localizeHref("/about")}>{t("About")}</Link>
+          <Link href={localizeHref("/treatments")}>{t("All treatments")}</Link>
+          <Link href={localizeHref("/blogs")}>{t("Blogs")}</Link>
+          <Link href={localizeHref("/contact")}>{t("Contact")}</Link>
         </div>
         <div className="reveal reveal-delay-3">
-          <span>Patient support</span>
-          <a href="/about">Meet Dr. Dhar</a>
-          <a href="/contact">Book appointment</a>
+          <span>{t("Patient support")}</span>
+          <Link href={localizeHref("/about")}>{t("Meet Dr. Dhar")}</Link>
+          <Link href={localizeHref("/contact")}>{t("Book appointment")}</Link>
           <a href="https://wa.me/919810818266" target="_blank" rel="noreferrer">
-            WhatsApp the clinic
+            {t("WhatsApp the clinic")}
           </a>
-          <a href="tel:+919810818266">Call the desk</a>
+          <a href="tel:+919810818266">{t("Call the desk")}</a>
         </div>
       </div>
       <div className={`${styles.container} ${styles.footerBottom}`}>
         <span>© {new Date().getFullYear()} Dr. A. K. Dhar</span>
-        <span>Medical oncology · Gurugram & Delhi NCR</span>
+        <span>{t("Medical oncology · Gurugram & Delhi NCR")}</span>
       </div>
     </footer>
   );
 }
+

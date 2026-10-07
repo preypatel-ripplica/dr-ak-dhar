@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,7 +23,7 @@ import {
 import styles from "./HomeSections.module.css";
 import SiteFooter from "./SiteFooter";
 import AppointmentSection from "./AppointmentSection";
-
+import { useI18n } from "./I18nProvider";
 
 const concerns = [
   {
@@ -202,6 +203,7 @@ const testimonials = [
 ];
 
 export default function HomeSections() {
+  const { t, localizeHref } = useI18n();
   const [concern, setConcern] = useState<number | null>(null);
   const [detailAnswers, setDetailAnswers] = useState<[number | null, number | null]>([null, null]);
   const [step, setStep] = useState(1);
@@ -221,7 +223,7 @@ export default function HomeSections() {
       setTestimonial((current) => (current + 1) % testimonials.length);
     }, 5500);
     return () => window.clearInterval(id);
-  }, [testimonialPaused, testimonial]);
+  }, [testimonialPaused]);
 
   const goToTestimonial = (index: number) => {
     setTestimonial((index + testimonials.length) % testimonials.length);
@@ -243,27 +245,32 @@ export default function HomeSections() {
       <section className={styles.introSection} aria-labelledby="intro-title">
         <div className={`${styles.container} ${styles.doctorProfile}`}>
           <div className={`${styles.profileVisual} reveal-left`}>
-            <Image src="/images/dr-ak-dhar-consultation.png" alt="Dr. (Brig.) A. K. Dhar in his clinic coat" width={787} height={802} sizes="(max-width: 700px) 82vw, 430px" />
-            <div className={styles.profileQuote}><span>“</span><p>Clarity in every conversation.<br />Confidence in every next step.</p></div>
+            <Image src="/images/dr-ak-dhar-consultation.png" alt={t("Dr. (Brig.) A. K. Dhar in his clinic coat")} width={787} height={802} sizes="(max-width: 700px) 82vw, 430px" />
+            <div className={styles.profileQuote}><span>“</span><p>{t("Clarity in every conversation.")}<br />{t("Confidence in every next step.")}</p></div>
           </div>
           <div className={`${styles.profileCopy} reveal-right`}>
-            <span className={styles.sectionKicker}>ABOUT THE DOCTOR</span>
-            <h2 id="intro-title">A trusted name in cancer care.</h2>
-            <p className={styles.profileLead}>Dr. (Brig.) A. K. Dhar is a senior medical oncologist with more than 35 years of experience caring for people with cancer.</p>
-            <p>As Clinical Director and Head of Medical Oncology at Marengo Asia Hospitals, he brings together deep expertise, honest guidance and the patience to make complex decisions feel clearer.</p>
-            <ul className={styles.profileHighlights}><li><Check size={16} />35+ years in medical oncology</li><li><Check size={16} />Clinical Director &amp; Head, Medical Oncology</li><li><Check size={16} />Care for solid tumours and blood cancers</li><li><Check size={16} />Marengo Asia Hospitals, Gurugram</li></ul>
-            <div className={styles.profileSignature}><strong>Dr. (Brig.) A. K. Dhar</strong><span>Medical Oncologist &amp; Cancer Specialist</span></div>
-            <a className={styles.profileButton} href="/about">More about Dr. Dhar <ArrowRight size={17} /></a>
+            <span className={styles.sectionKicker}>{t("ABOUT THE DOCTOR")}</span>
+            <h2 id="intro-title">{t("A trusted name in cancer care.")}</h2>
+            <p className={styles.profileLead}>{t("Dr. (Brig.) A. K. Dhar is a senior medical oncologist with more than 35 years of experience caring for people with cancer.")}</p>
+            <p>{t("As Clinical Director and Head of Medical Oncology at Marengo Asia Hospitals, he brings together deep expertise, honest guidance and the patience to make complex decisions feel clearer.")}</p>
+            <ul className={styles.profileHighlights}>
+              <li><Check size={16} />{t("35+ years in medical oncology")}</li>
+              <li><Check size={16} />{t("Clinical Director & Head, Medical Oncology")}</li>
+              <li><Check size={16} />{t("Care for solid tumours and blood cancers")}</li>
+              <li><Check size={16} />{t("Marengo Asia Hospitals, Gurugram")}</li>
+            </ul>
+            <div className={styles.profileSignature}><strong>Dr. (Brig.) A. K. Dhar</strong><span>{t("Medical Oncologist & Cancer Specialist")}</span></div>
+            <Link className={styles.profileButton} href={localizeHref("/about")}>{t("More about Dr. Dhar")} <ArrowRight size={17} /></Link>
           </div>
         </div>
       </section>
 
-      <section className={styles.statsBreak} aria-label="Practice highlights">
+      <section className={styles.statsBreak} aria-label={t("Practice highlights")}>
         <div className={`${styles.container} ${styles.statsGrid}`}>
           {trustStats.map((stat, index) => (
             <div key={stat.label} className={`${styles.statItem} reveal-scale reveal-delay-${index + 1}`}>
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
+              <strong dir="ltr">{stat.value}</strong>
+              <span>{t(stat.label)}</span>
             </div>
           ))}
         </div>
@@ -273,17 +280,17 @@ export default function HomeSections() {
         <div className={styles.container}>
           <div className={`${styles.treatmentIntro} reveal`}>
             <div>
-              <span className={styles.sectionKicker}>01 / CARE THAT&apos;S RIGHT FOR YOU</span>
-              <h2 id="treatment-title">Every diagnosis is different.<br /><em>Your care should be, too.</em></h2>
+              <span className={styles.sectionKicker}>{t("01 / CARE THAT'S RIGHT FOR YOU")}</span>
+              <h2 id="treatment-title">{t("Every diagnosis is different.")}<br /><em>{t("Your care should be, too.")}</em></h2>
             </div>
             <div className={styles.treatmentIntroCopy}>
-              <p>From prevention to complex pathways, understand your options at your own pace.</p>
-              <a className={styles.textLink} href="/treatments">View all treatments <span><ArrowUpRight size={16} /></span></a>
+              <p>{t("From prevention to complex pathways, understand your options at your own pace.")}</p>
+              <Link className={styles.textLink} href={localizeHref("/treatments")}>{t("View all treatments")} <span><ArrowUpRight size={16} /></span></Link>
             </div>
           </div>
 
           <div className={`${styles.treatmentCard} reveal reveal-delay-1`}>
-            <div className={styles.treatmentTabs} role="tablist" aria-label="Treatment pathways">
+            <div className={styles.treatmentTabs} role="tablist" aria-label={t("Treatment pathways")}>
               {treatmentGroups.map((item, index) => {
                 const Icon = item.Icon;
                 const selected = treatment === index;
@@ -297,7 +304,7 @@ export default function HomeSections() {
                     onClick={() => setTreatment(index)}
                   >
                     <Icon size={18} strokeWidth={1.6} />
-                    <span className={styles.tabLabel}>{item.label}</span>
+                    <span className={styles.tabLabel}>{t(item.label)}</span>
                     {selected ? <ArrowRight size={16} /> : <ArrowUpRight size={16} />}
                   </button>
                 );
@@ -308,7 +315,7 @@ export default function HomeSections() {
               <Image
                 key={active.image}
                 src={active.image}
-                alt={active.imageAlt}
+                alt={t(active.imageAlt)}
                 fill
                 sizes="(max-width: 900px) 90vw, 360px"
                 className={styles.treatmentImage}
@@ -317,26 +324,26 @@ export default function HomeSections() {
 
             <div className={styles.treatmentPanel} role="tabpanel">
               <div key={active.slug} className={styles.treatmentPanelInner}>
-                <span className={styles.panelKicker}>{String(treatment + 1).padStart(2, "0")} / SPECIALIST CARE</span>
+                <span className={styles.panelKicker}>{String(treatment + 1).padStart(2, "0")} / {t("SPECIALIST CARE")}</span>
                 <h3>
                   <ActiveIcon size={24} strokeWidth={1.5} />
-                  {active.label}
+                  {t(active.label)}
                 </h3>
-                <p>{active.text}</p>
+                <p>{t(active.text)}</p>
                 <div className={styles.treatmentMeta}>
                   <div>
-                    <small>Focus</small>
-                    <strong>{active.focus}</strong>
+                    <small>{t("Focus")}</small>
+                    <strong>{t(active.focus)}</strong>
                   </div>
                   <div>
-                    <small>Approach</small>
-                    <strong>{active.approach}</strong>
+                    <small>{t("Approach")}</small>
+                    <strong>{t(active.approach)}</strong>
                   </div>
                 </div>
-                <a className={styles.treatmentExplore} href={`/treatments/${active.slug}/`}>
-                  Explore this treatment
+                <Link className={styles.treatmentExplore} href={localizeHref(`/treatments/${active.slug}/`)}>
+                  {t("Explore this treatment")}
                   <span aria-hidden="true"><ArrowRight size={16} strokeWidth={1.8} /></span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -346,17 +353,17 @@ export default function HomeSections() {
       <section className={styles.finderSection} aria-labelledby="finder-title">
         <div className={`${styles.container} ${styles.finderWrap}`}>
           <div className={`${styles.finderHeading} reveal`}>
-            <span className={styles.sectionKicker}>02 / FIND YOUR STARTING POINT</span>
-            <h2 id="finder-title">Not sure what care you need?</h2>
-            <p>Answer a few short questions. We will help you find the right place to begin.</p>
+            <span className={styles.sectionKicker}>{t("02 / FIND YOUR STARTING POINT")}</span>
+            <h2 id="finder-title">{t("Not sure what care you need?")}</h2>
+            <p>{t("Answer a few short questions. We will help you find the right place to begin.")}</p>
           </div>
 
           <div className={`${styles.finderGrid} reveal reveal-delay-1`}>
             <div className={styles.finderCard}>
               <div className={styles.finderTop}>
-                <span>Step {step} of 3</span>
+                <span>{t("Step")} {step} {t("of")} 3</span>
                 <button type="button" onClick={resetFinder}>
-                  Start over
+                  {t("Start over")}
                 </button>
               </div>
               <div className={styles.progress} aria-hidden="true">
@@ -368,7 +375,7 @@ export default function HomeSections() {
                   className={step === 1 ? undefined : styles.finderSizer}
                   aria-hidden={step !== 1}
                 >
-                  <h3>What brings you here today?</h3>
+                  <h3>{t("What brings you here today?")}</h3>
                   <div className={styles.concerns}>
                     {concerns.map((item, index) => (
                       <button
@@ -379,8 +386,8 @@ export default function HomeSections() {
                         onClick={() => selectConcern(index)}
                       >
                         <span className={styles.concernCopy}>
-                          <strong>{item.title}</strong>
-                          <small>{item.detail}</small>
+                          <strong>{t(item.title)}</strong>
+                          <small>{t(item.detail)}</small>
                         </span>
                         <span className={styles.concernIcon}>
                           {concern === index ? <Check size={17} strokeWidth={2.2} /> : <ArrowRight size={16} />}
@@ -393,10 +400,10 @@ export default function HomeSections() {
                 {step === 2 && activeConcern && (
                   <div className={styles.finderOverlay}>
                     <div className={styles.detailStep}>
-                      <h3>A few details will help</h3>
+                      <h3>{t("A few details will help")}</h3>
                       {activeConcern.details.map((group, groupIndex) => (
                         <div key={group.prompt} className={styles.detailGroup}>
-                          <p className={styles.detailPrompt}>{group.prompt}</p>
+                          <p className={styles.detailPrompt}>{t(group.prompt)}</p>
                           <div className={styles.detailOptions}>
                             {group.options.map((option, optionIndex) => (
                               <button
@@ -409,7 +416,7 @@ export default function HomeSections() {
                                   setDetailAnswers(next);
                                 }}
                               >
-                                {option}
+                                {t(option)}
                               </button>
                             ))}
                           </div>
@@ -423,10 +430,10 @@ export default function HomeSections() {
                   <div className={styles.finderOverlay}>
                     <div className={styles.stepMessage}>
                       <ClipboardCheck size={34} strokeWidth={1.4} />
-                      <h3>Your next step is ready.</h3>
+                      <h3>{t("Your next step is ready.")}</h3>
                       <p>
-                        Book a consultation
-                        {activeConcern ? ` for ${activeConcern.title.toLowerCase()}` : ""}. Bring any scans, pathology reports or prescriptions you already have — our team will guide you from there.
+                        {t("Book a consultation")}
+                        {activeConcern ? ` ${t("for")} ${t(activeConcern.title).toLowerCase()}` : ""}. {t("Bring any scans, pathology reports or prescriptions you already have — our team will guide you from there.")}
                       </p>
                     </div>
                   </div>
@@ -436,13 +443,13 @@ export default function HomeSections() {
               <div className={styles.finderActions}>
                 {step > 1 && (
                   <button type="button" className={styles.backButton} onClick={() => setStep(step - 1)}>
-                    Back
+                    {t("Back")}
                   </button>
                 )}
                 {step === 3 ? (
-                  <a className={styles.continueButton} href="/contact">
-                    Book a consultation <ArrowUpRight size={17} />
-                  </a>
+                  <Link className={styles.continueButton} href={localizeHref("/contact")}>
+                    {t("Book a consultation")} <ArrowUpRight size={17} />
+                  </Link>
                 ) : (
                   <button
                     type="button"
@@ -450,7 +457,7 @@ export default function HomeSections() {
                     disabled={(step === 1 && concern === null) || (step === 2 && !step2Ready)}
                     onClick={() => setStep(Math.min(3, step + 1))}
                   >
-                    Continue <ArrowUpRight size={17} />
+                    {t("Continue")} <ArrowUpRight size={17} />
                   </button>
                 )}
               </div>
@@ -461,29 +468,29 @@ export default function HomeSections() {
                 <div className={styles.iconBubble}>
                   <Stethoscope size={22} strokeWidth={1.5} />
                 </div>
-                <h3>{activeConcern ? activeConcern.title : "A calm, considered next step."}</h3>
+                <h3>{activeConcern ? t(activeConcern.title) : t("A calm, considered next step.")}</h3>
                 <p>
                   {activeConcern
-                    ? activeConcern.aside
-                    : "You do not have to navigate cancer care alone. Start with the question that is on your mind."}
+                    ? t(activeConcern.aside)
+                    : t("You do not have to navigate cancer care alone. Start with the question that is on your mind.")}
                 </p>
-                <a href="/contact">
-                  Know more <ArrowRight size={16} />
-                </a>
+                <Link href={localizeHref("/contact")}>
+                  {t("Know more")} <ArrowRight size={16} />
+                </Link>
               </div>
 
               <div className={styles.nextCard}>
-                <span>What happens next?</span>
-                <p><i>1</i> Share symptoms or reports</p>
-                <p><i>2</i> Doctor reviews the concern</p>
-                <p><i>3</i> Get a clear treatment plan</p>
+                <span>{t("What happens next?")}</span>
+                <p><i>1</i> {t("Share symptoms or reports")}</p>
+                <p><i>2</i> {t("Doctor reviews the concern")}</p>
+                <p><i>3</i> {t("Get a clear treatment plan")}</p>
               </div>
 
               <a className={styles.helpCard} href="tel:+919810818266">
                 <Phone size={21} strokeWidth={1.5} />
                 <span>
-                  <strong>Need help right now?</strong>
-                  <small>Call the clinic team</small>
+                  <strong>{t("Need help right now?")}</strong>
+                  <small>{t("Call the clinic team")}</small>
                 </span>
                 <ArrowRight size={18} />
               </a>
@@ -496,19 +503,19 @@ export default function HomeSections() {
         <div className={styles.container}>
           <div className={`${styles.testimonialsHeader} reveal`}>
             <div>
-              <span className={styles.sectionKicker}>03 / PATIENT STORIES</span>
+              <span className={styles.sectionKicker}>{t("03 / PATIENT STORIES")}</span>
               <h2 id="testimonials-title">
-                Words from people
+                {t("Words from people")}
                 <br />
-                <em>we&apos;ve walked with.</em>
+                <em>{t("we've walked with.")}</em>
               </h2>
             </div>
-            <a className={styles.textLink} href="/contact">
-              Share your experience
+            <Link className={styles.textLink} href={localizeHref("/contact")}>
+              {t("Share your experience")}
               <span aria-hidden="true">
                 <ArrowRight size={16} />
               </span>
-            </a>
+            </Link>
           </div>
 
           <div
@@ -518,8 +525,8 @@ export default function HomeSections() {
           >
             <aside className={styles.testimonialPanel} aria-hidden="true">
               <Quote size={36} strokeWidth={1.4} />
-              <p>Care that makes a difference.</p>
-              <small>Individual experiences. Personal journeys.</small>
+              <p>{t("Care that makes a difference.")}</p>
+              <small>{t("Individual experiences. Personal journeys.")}</small>
             </aside>
 
             <div className={styles.testimonialMain}>
@@ -527,22 +534,22 @@ export default function HomeSections() {
                 <div className={styles.testimonialSizer} aria-hidden="true">
                   {testimonials.map((item) => (
                     <div key={item.name} className={styles.testimonialSlide}>
-                      <span className={styles.testimonialContext}>{item.context}</span>
-                      <blockquote>{item.quote}</blockquote>
+                      <span className={styles.testimonialContext}>{t(item.context)}</span>
+                      <blockquote>{t(item.quote)}</blockquote>
                       <div className={styles.testimonialAuthor}>
-                        <strong>{item.name}</strong>
-                        <span>{item.place}</span>
+                        <strong>{t(item.name)}</strong>
+                        <span>{t(item.place)}</span>
                       </div>
                     </div>
                   ))}
                 </div>
                 <div className={styles.testimonialActive}>
                   <div key={activeTestimonial.name} className={styles.testimonialSlide}>
-                    <span className={styles.testimonialContext}>{activeTestimonial.context}</span>
-                    <blockquote>{activeTestimonial.quote}</blockquote>
+                    <span className={styles.testimonialContext}>{t(activeTestimonial.context)}</span>
+                    <blockquote>{t(activeTestimonial.quote)}</blockquote>
                     <div className={styles.testimonialAuthor}>
-                      <strong>{activeTestimonial.name}</strong>
-                      <span>{activeTestimonial.place}</span>
+                      <strong>{t(activeTestimonial.name)}</strong>
+                      <span>{t(activeTestimonial.place)}</span>
                     </div>
                   </div>
                 </div>
@@ -552,7 +559,7 @@ export default function HomeSections() {
                 <div className={styles.testimonialNav}>
                   <button
                     type="button"
-                    aria-label="Previous testimonial"
+                    aria-label={t("Previous testimonial")}
                     onClick={() => goToTestimonial(testimonial - 1)}
                   >
                     <ArrowLeft size={18} strokeWidth={1.8} />
@@ -560,7 +567,7 @@ export default function HomeSections() {
                   <button
                     type="button"
                     className={styles.testimonialNext}
-                    aria-label="Next testimonial"
+                    aria-label={t("Next testimonial")}
                     onClick={() => goToTestimonial(testimonial + 1)}
                   >
                     <ArrowRight size={18} strokeWidth={1.8} />
@@ -570,14 +577,14 @@ export default function HomeSections() {
                   </span>
                 </div>
 
-                <div className={styles.testimonialDots} role="tablist" aria-label="Testimonials">
+                <div className={styles.testimonialDots} role="tablist" aria-label={t("Testimonials")}>
                   {testimonials.map((item, index) => (
                     <button
                       key={item.name}
                       type="button"
                       role="tab"
                       aria-selected={testimonial === index}
-                      aria-label={`Show testimonial from ${item.name}`}
+                      aria-label={`${t("Show testimonial from")} ${t(item.name)}`}
                       className={testimonial === index ? styles.activeDot : undefined}
                       onClick={() => goToTestimonial(index)}
                     />
@@ -593,17 +600,17 @@ export default function HomeSections() {
         <div className={styles.container}>
           <div className={styles.faqGrid}>
             <div className={`${styles.faqIntro} reveal-left`}>
-              <span className={styles.sectionKicker}>COMMON QUESTIONS</span>
+              <span className={styles.sectionKicker}>{t("COMMON QUESTIONS")}</span>
               <h2 id="faq-title">
-                You can ask
+                {t("You can ask")}
                 <br />
-                <em>anything.</em>
+                <em>{t("anything.")}</em>
               </h2>
-              <p>We believe an informed patient is an empowered patient. Here are a few questions people often bring to their first visit.</p>
-              <a className={styles.faqCta} href="/contact">
-                Ask the clinic team
+              <p>{t("We believe an informed patient is an empowered patient. Here are a few questions people often bring to their first visit.")}</p>
+              <Link className={styles.faqCta} href={localizeHref("/contact")}>
+                {t("Ask the clinic team")}
                 <ArrowRight size={17} />
-              </a>
+              </Link>
             </div>
             <div className={`${styles.faqList} reveal-right`}>
               {faqs.map(([question, answer], index) => {
@@ -621,7 +628,7 @@ export default function HomeSections() {
                       id={`faq-button-${index}`}
                     >
                       <span className={styles.faqIndex}>{String(index + 1).padStart(2, "0")}</span>
-                      <span className={styles.faqQuestion}>{question}</span>
+                      <span className={styles.faqQuestion}>{t(question)}</span>
                       <ChevronDown size={18} />
                     </button>
                     <div
@@ -632,7 +639,7 @@ export default function HomeSections() {
                       data-open={isOpen ? "true" : "false"}
                     >
                       <div className={styles.faqAnswerInner}>
-                        <p>{answer}</p>
+                        <p>{t(answer)}</p>
                       </div>
                     </div>
                   </div>
@@ -649,3 +656,4 @@ export default function HomeSections() {
     </>
   );
 }
+

@@ -1,16 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, ArrowUpRight, ClipboardList, HeartHandshake, MapPin, Ribbon, ShieldCheck } from "lucide-react";
 import styles from "./HomeHero.module.css";
 import HomeSections from "./HomeSections";
 import SiteHeader from "./SiteHeader";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const appointmentUrl = "/contact";
+import { useI18n } from "./I18nProvider";
 
 export default function HomeHero() {
+  const { t, localizeHref } = useI18n();
   useScrollReveal();
+
+  const appointmentUrl = localizeHref("/contact");
 
   return (
     <>
@@ -22,37 +25,37 @@ export default function HomeHero() {
             <div className={`${styles.heroCopy} reveal-left`}>
               <p className={styles.eyebrow}>
                 <span />
-                EXPERIENCE WITH EMPATHY
+                {t("EXPERIENCE WITH EMPATHY")}
               </p>
               <h1 id="hero-title">
-                Expert cancer care.
+                {t("Expert cancer care.")}
                 <br />
-                <em>A reassuring hand.</em>
+                <em>{t("A reassuring hand.")}</em>
               </h1>
               <p className={styles.introduction}>
-                Expertise you can trust. Time to listen.
+                {t("Expertise you can trust. Time to listen.")}
                 <br />
-                Dr. (Brig.) A. K. Dhar helps you understand your options and take the next step with confidence.
+                {t("Dr. (Brig.) A. K. Dhar helps you understand your options and take the next step with confidence.")}
               </p>
               <div className={styles.heroActions}>
-                <a className={styles.primaryButton} href={appointmentUrl}>
-                  Book an appointment <ArrowUpRight size={19} strokeWidth={1.7} />
-                </a>
-                <a className={styles.doctorLink} href="/about">
-                  Meet your doctor{" "}
+                <Link className={styles.primaryButton} href={appointmentUrl}>
+                  {t("Book an appointment")} <ArrowUpRight size={19} strokeWidth={1.7} />
+                </Link>
+                <Link className={styles.doctorLink} href={localizeHref("/about")}>
+                  {t("Meet your doctor")}{" "}
                   <span>
                     <ArrowRight size={19} strokeWidth={1.4} />
                   </span>
-                </a>
+                </Link>
               </div>
               <div className={styles.credentials}>
                 <ShieldCheck size={27} strokeWidth={1.35} />
                 <div>
-                  <strong>35+ years of clinical experience</strong>
+                  <strong>{t("35+ years of clinical experience")}</strong>
                   <span>
-                    Clinical Director & Head — Medical Oncology
+                    {t("Clinical Director & Head — Medical Oncology")}
                     <br />
-                    Marengo Asia Hospitals, Gurugram
+                    {t("Marengo Asia Hospitals, Gurugram")}
                   </span>
                 </div>
               </div>
@@ -62,12 +65,12 @@ export default function HomeHero() {
               <div className={styles.portraitArch} aria-hidden="true" />
               <div className={styles.portraitOrbit} aria-hidden="true" />
               <span className={styles.portraitWord} aria-hidden="true">
-                care.
+                {t("care.")}
               </span>
               <Image
                 className={styles.portrait}
                 src="/images/dr-ak-dhar-original.jpg"
-                alt="Dr. (Brig.) A. K. Dhar, Medical Oncologist"
+                alt={t("Dr. (Brig.) A. K. Dhar, Medical Oncologist")}
                 width={1270}
                 height={1600}
                 priority
@@ -76,40 +79,42 @@ export default function HomeHero() {
               <div className={styles.portraitNote}>
                 <HeartHandshake size={28} strokeWidth={1.3} />
                 <span>
-                  Personalised care.
+                  {t("Personalised care.")}
                   <br />
-                  <strong>A person-first approach.</strong>
+                  <strong>{t("A person-first approach.")}</strong>
                 </span>
               </div>
               <div className={styles.portraitCaption}>
                 <span>Dr. (Brig.) A. K. Dhar</span>
                 <p>
-                  MBBS, MD <span>·</span> Medical Oncology
+                  MBBS, MD <span>·</span> {t("Medical Oncology")}
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <nav className={`${styles.container} ${styles.quickLinks}`} aria-label="Consultation quick links">
-          <a className="reveal reveal-delay-1" href="/treatments">
+        <nav className={`${styles.container} ${styles.quickLinks}`} aria-label={t("Consultation quick links")}>
+          <Link className="reveal reveal-delay-1" href={localizeHref("/treatments")}>
             <Ribbon size={26} strokeWidth={1.35} />
             <span>
-              <small>UNDERSTAND YOUR OPTIONS</small>Explore cancer care
+              <small>{t("UNDERSTAND YOUR OPTIONS")}</small>
+              {t("Explore cancer care")}
             </span>
             <span className={styles.quickArrow}>
               <ArrowUpRight size={18} strokeWidth={1.4} />
             </span>
-          </a>
-          <a className="reveal reveal-delay-2" href={appointmentUrl}>
+          </Link>
+          <Link className="reveal reveal-delay-2" href={appointmentUrl}>
             <ClipboardList size={26} strokeWidth={1.35} />
             <span>
-              <small>LET’S TAKE THE NEXT STEP</small>Plan your consultation
+              <small>{t("LET’S TAKE THE NEXT STEP")}</small>
+              {t("Plan your consultation")}
             </span>
             <span className={styles.quickArrow}>
               <ArrowUpRight size={18} strokeWidth={1.4} />
             </span>
-          </a>
+          </Link>
           <a
             className="reveal reveal-delay-3"
             href="https://www.google.com/maps/search/?api=1&query=Marengo+Asia+Hospitals+Sector+56+Gurugram"
@@ -118,7 +123,8 @@ export default function HomeHero() {
           >
             <MapPin size={26} strokeWidth={1.35} />
             <span>
-              <small>MARENGO ASIA HOSPITALS</small>Find us in Gurugram
+              <small>{t("MARENGO ASIA HOSPITALS")}</small>
+              {t("Find us in Gurugram")}
             </span>
             <span className={styles.quickArrow}>
               <ArrowUpRight size={18} strokeWidth={1.4} />
@@ -130,3 +136,4 @@ export default function HomeHero() {
     </>
   );
 }
+

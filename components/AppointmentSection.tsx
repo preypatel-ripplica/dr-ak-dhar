@@ -3,8 +3,10 @@
 import { useState, type FormEvent, type MouseEvent } from "react";
 import { ArrowUpRight, MessageCircle, Phone } from "lucide-react";
 import styles from "./HomeSections.module.css";
+import { useI18n } from "./I18nProvider";
 
 export default function AppointmentSection() {
+  const { t } = useI18n();
   const [appointment, setAppointment] = useState({
     email: "",
     name: "",
@@ -32,25 +34,24 @@ export default function AppointmentSection() {
       <div className={styles.container}>
         <div className={styles.appointmentGrid}>
           <div className={`${styles.appointmentCopy} reveal-left`}>
-            <span className={styles.sectionKicker}>LET&apos;S TAKE THE NEXT STEP</span>
+            <span className={styles.sectionKicker}>{t("LET'S TAKE THE NEXT STEP")}</span>
             <h2 id="appointment-title">
-              Your care deserves
+              {t("Your care deserves")}
               <br />
-              <em>a conversation.</em>
+              <em>{t("a conversation.")}</em>
             </h2>
             <p>
-              Share a few details and the clinic team will help arrange a consultation with Dr. Dhar. Prefer to talk
-              now? Reach the appointment desk directly.
+              {t("Share a few details and the clinic team will help arrange a consultation with Dr. Dhar. Prefer to talk now? Reach the appointment desk directly.")}
             </p>
 
             <div className={styles.appointmentReach}>
-              <span>Reach us directly</span>
+              <span>{t("Reach us directly")}</span>
               <a href="tel:+919810818266" className={styles.appointmentReachLink}>
                 <span className={styles.appointmentReachIcon}>
                   <Phone size={18} strokeWidth={1.7} />
                 </span>
                 <span>
-                  <small>Call</small>
+                  <small>{t("Call")}</small>
                   <strong>+91 98108 18266</strong>
                 </span>
                 <ArrowUpRight size={16} />
@@ -66,14 +67,14 @@ export default function AppointmentSection() {
                 </span>
                 <span>
                   <small>WhatsApp</small>
-                  <strong>Message the clinic</strong>
+                  <strong>{t("Message the clinic")}</strong>
                 </span>
                 <ArrowUpRight size={16} />
               </a>
             </div>
 
             <div className={styles.appointmentClinic}>
-              <span>Clinic</span>
+              <span>{t("Clinic")}</span>
               <strong>Marengo Asia Hospitals</strong>
               <small>Gurugram, Haryana</small>
               <a
@@ -82,19 +83,19 @@ export default function AppointmentSection() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Get directions
+                {t("Get directions")}
                 <ArrowUpRight size={14} />
               </a>
             </div>
           </div>
 
           <form className={`${styles.appointmentForm} reveal-right`} onSubmit={submitAppointment}>
-            <span className={styles.sectionKicker}>WE&apos;RE HERE TO HELP</span>
-            <h3>Request an appointment</h3>
-            <p>Tell us a little about yourself to get started.</p>
+            <span className={styles.sectionKicker}>{t("WE'RE HERE TO HELP")}</span>
+            <h3>{t("Request an appointment")}</h3>
+            <p>{t("Tell us a little about yourself to get started.")}</p>
 
             <label>
-              Email address
+              {t("Email address")}
               <input
                 type="email"
                 required
@@ -105,45 +106,44 @@ export default function AppointmentSection() {
             </label>
 
             <label>
-              Your name
+              {t("Your name")}
               <input
                 type="text"
                 required
-                placeholder="Full name"
+                placeholder={t("Full name")}
                 value={appointment.name}
                 onChange={(event) => setAppointment({ ...appointment, name: event.target.value })}
               />
             </label>
 
             <label>
-              Phone number
+              {t("Phone number")}
               <input
                 type="tel"
                 required
-                placeholder="Your mobile number"
+                placeholder={t("Your mobile number")}
                 value={appointment.phone}
                 onChange={(event) => setAppointment({ ...appointment, phone: event.target.value })}
               />
             </label>
 
             <label>
-              Additional details <small>optional</small>
+              {t("Additional details")} <small>{t("optional")}</small>
               <textarea
                 rows={3}
-                placeholder="Share your concern, reports ready, or preferred timing"
+                placeholder={t("Share your concern, reports ready, or preferred timing")}
                 value={appointment.details}
                 onChange={(event) => setAppointment({ ...appointment, details: event.target.value })}
               />
             </label>
 
             <button type="submit" className={styles.appointmentSubmit}>
-              Send appointment request
+              {t("Send appointment request")}
               <ArrowUpRight size={17} />
             </button>
 
             <p className={styles.appointmentNote}>
-              By sending this form, you agree to be contacted about your request. The team will confirm availability and
-              timing.
+              {t("By sending this form, you agree to be contacted about your request. The team will confirm availability and timing.")}
             </p>
           </form>
         </div>

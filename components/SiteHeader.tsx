@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Menu, Phone, X } from "lucide-react";
 import styles from "./HomeHero.module.css";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useI18n } from "./I18nProvider";
 
 const treatments = [
   ["Breast cancer", "breast-cancer"],
@@ -19,6 +21,7 @@ type SiteHeaderProps = {
 };
 
 export default function SiteHeader({ active = "home" }: SiteHeaderProps) {
+  const { t, localizeHref } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [treatmentsOpen, setTreatmentsOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -53,32 +56,35 @@ export default function SiteHeader({ active = "home" }: SiteHeaderProps) {
   return (
     <>
       <a className={styles.skipLink} href="#main">
-        Skip to content
+        {t("Skip to content")}
       </a>
       <div className={styles.utilityBar}>
         <div className={styles.container}>
           <span>
-            ONCOLOGY CARE <span className={styles.utilityLocation}>· Gurugram & Delhi NCR</span>
+            {t("ONCOLOGY CARE")}{" "}
+            <span className={styles.utilityLocation}>{t("· Gurugram & Delhi NCR")}</span>
           </span>
-          <a href="tel:+919810818266">
-            <Phone size={13} strokeWidth={1.5} /> +91 98108 18266
-          </a>
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <a href="tel:+919810818266">
+              <Phone size={13} strokeWidth={1.5} /> +91 98108 18266
+            </a>
+          </div>
         </div>
       </div>
 
       <header className={styles.header} ref={headerRef}>
         <div className={`${styles.container} ${styles.headerInner}`}>
-          <Link href="/" className={styles.brand} aria-label="Dr. A. K. Dhar — Home">
+          <Link href={localizeHref("/")} className={styles.brand} aria-label={t("Dr. A. K. Dhar — Home")}>
             <span className={styles.brandName}>
               <i>Dr.</i> A. K. <strong>Dhar.</strong>
             </span>
-            <span className={styles.brandSpecialty}>MEDICAL ONCOLOGIST</span>
+            <span className={styles.brandSpecialty}>{t("MEDICAL ONCOLOGIST")}</span>
           </Link>
 
           <button
             ref={menuRef}
             className={styles.menuToggle}
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            aria-label={menuOpen ? t("Close navigation") : t("Open navigation")}
             aria-expanded={menuOpen}
             aria-controls="main-navigation"
             onClick={() => {
@@ -91,14 +97,14 @@ export default function SiteHeader({ active = "home" }: SiteHeaderProps) {
 
           <nav
             id="main-navigation"
-            aria-label="Main navigation"
+            aria-label={t("Main navigation")}
             className={`${styles.navigation} ${menuOpen ? styles.navigationOpen : ""}`}
           >
-            <Link className={active === "home" ? styles.activeLink : undefined} href="/" aria-current={active === "home" ? "page" : undefined}>
-              Home
+            <Link className={active === "home" ? styles.activeLink : undefined} href={localizeHref("/")} aria-current={active === "home" ? "page" : undefined}>
+              {t("Home")}
             </Link>
-            <Link className={active === "about" ? styles.activeLink : undefined} href="/about" aria-current={active === "about" ? "page" : undefined}>
-              About
+            <Link className={active === "about" ? styles.activeLink : undefined} href={localizeHref("/about")} aria-current={active === "about" ? "page" : undefined}>
+              {t("About")}
             </Link>
             <div
               className={`${styles.dropdown} ${treatmentsOpen ? styles.dropdownOpen : ""}`}
@@ -113,45 +119,52 @@ export default function SiteHeader({ active = "home" }: SiteHeaderProps) {
                 aria-haspopup="true"
                 onClick={() => setTreatmentsOpen(!treatmentsOpen)}
               >
-                Treatments <ChevronDown size={14} className={treatmentsOpen ? styles.chevronOpen : ""} />
+                {t("Treatments")} <ChevronDown size={14} className={treatmentsOpen ? styles.chevronOpen : ""} />
               </button>
               <div
                 id="treatment-links"
                 className={styles.dropdownPanel}
                 aria-hidden={!treatmentsOpen}
               >
-                <span className={styles.dropdownLabel}>EXPLORE CANCER CARE</span>
+                <span className={styles.dropdownLabel}>{t("EXPLORE CANCER CARE")}</span>
                 {treatments.map(([label, slug]) => (
-                  <Link key={slug} href={`/treatments/${slug}`} onClick={() => setTreatmentsOpen(false)}>
-                    {label}
+                  <Link key={slug} href={localizeHref(`/treatments/${slug}`)} onClick={() => setTreatmentsOpen(false)}>
+                    {t(label)}
                     <ArrowUpRight size={14} />
                   </Link>
                 ))}
                 <Link
-                  href="/treatments"
+                  href={localizeHref("/treatments")}
                   className={styles.dropdownAll}
                   onClick={() => setTreatmentsOpen(false)}
                 >
-                  All treatments
+                  {t("All treatments")}
                   <ArrowUpRight size={14} />
                 </Link>
               </div>
             </div>
-            <Link className={active === "blogs" ? styles.activeLink : undefined} href="/blogs" aria-current={active === "blogs" ? "page" : undefined}>
-              Blogs
+            <Link className={active === "blogs" ? styles.activeLink : undefined} href={localizeHref("/blogs")} aria-current={active === "blogs" ? "page" : undefined}>
+              {t("Blogs")}
             </Link>
-            <Link className={active === "contact" ? styles.activeLink : undefined} href="/contact" aria-current={active === "contact" ? "page" : undefined}>
-              Contact
+            <Link className={active === "contact" ? styles.activeLink : undefined} href={localizeHref("/contact")} aria-current={active === "contact" ? "page" : undefined}>
+              {t("Contact")}
             </Link>
-            <Link className={`${styles.primaryButton} ${styles.mobileAppointment}`} href="/contact">
-              Book appointment <ArrowUpRight size={17} />
+            <div className={styles.mobileLanguageWrapper}>
+              <LanguageSwitcher />
+            </div>
+            <Link className={`${styles.primaryButton} ${styles.mobileAppointment}`} href={localizeHref("/contact")}>
+              {t("Book appointment")} <ArrowUpRight size={17} />
             </Link>
           </nav>
-          <Link className={`${styles.primaryButton} ${styles.headerAppointment}`} href="/contact">
-            Book appointment <ArrowUpRight size={17} strokeWidth={1.7} />
-          </Link>
+          <div className={styles.headerActions}>
+            <LanguageSwitcher />
+            <Link className={`${styles.primaryButton} ${styles.headerAppointment}`} href={localizeHref("/contact")}>
+              {t("Book appointment")} <ArrowUpRight size={17} strokeWidth={1.7} />
+            </Link>
+          </div>
         </div>
       </header>
     </>
   );
 }
+

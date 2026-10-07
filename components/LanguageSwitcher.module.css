@@ -1,0 +1,110 @@
+.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggleButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line, #d2dfeb);
+  background: #f4f8fa;
+  color: #334e68;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+:global(header.scrolled) .toggleButton {
+  border-color: rgba(3, 33, 38, 0.15);
+  background: rgba(3, 33, 38, 0.04);
+  color: #0d2c27;
+}
+
+.toggleButton:hover {
+  background: #eaf3f8;
+  border-color: #3875a5;
+  color: var(--blue-deep, #19364f);
+}
+
+:global(header.scrolled) .toggleButton:hover {
+  background: rgba(3, 33, 38, 0.08);
+}
+
+.globeIcon {
+  opacity: 0.85;
+}
+
+.chevronIcon {
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  inset-inline-end: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  padding: 6px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(3, 33, 38, 0.1);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #1e293b;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.15s ease;
+}
+
+.menuItem:hover {
+  background: #f1f5f9;
+}
+
+.menuItemActive {
+  background: #e2e8f0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.nativeLabel {
+  font-weight: 600;
+}
+
+.enLabel {
+  font-size: 0.75rem;
+  color: #64748b;
+}

@@ -15,7 +15,9 @@
 .brandName strong { color: var(--blue-deep); font-weight: 700; }
 .brandSpecialty { display: flex; align-items: center; gap: 11px; margin-top: 8px; font-size: 9px; letter-spacing: .17em; font-weight: 600; }
 .brandSpecialty::before { content: ""; width: 25px; height: 1px; background: var(--sage); }
-.navigation { display: flex; align-items: center; gap: 27px; margin-left: auto; margin-right: 52px; }
+.navigation { display: flex; align-items: center; gap: 32px; margin-inline: auto; }
+.headerActions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.mobileLanguageWrapper { display: none; }
 .navigation > a, .dropdownTrigger { position: relative; font-size: 14px; color: #455766; text-decoration: none; line-height: 1.5; }
 .navigation > a:not(.primaryButton)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--blue-deep); transform: scaleX(0); transform-origin: left; transition: transform .2s; }
 .navigation > a:not(.primaryButton):hover::after { transform: scaleX(1); }
@@ -93,8 +95,24 @@
 .heroCopy { position: relative; z-index: 2; padding: 92px 0 72px; }
 .eyebrow { display: flex; align-items: center; gap: 14px; margin: 0 0 30px; font-size: 11px; font-weight: 700; letter-spacing: .13em; color: var(--sage-deep); }
 .eyebrow > span { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 0 5px #4fa89218; }
-.heroCopy h1 { margin: 0; font: 400 clamp(54px, 5.18vw, 76px)/1.085 var(--font-display); letter-spacing: -.049em; color: var(--navy); white-space: nowrap; }
+.heroCopy h1 { margin: 0; font: 400 clamp(44px, 4.5vw, 72px)/1.12 var(--font-display); letter-spacing: -.04em; color: var(--navy); word-break: normal; }
 .heroCopy h1 em { font-weight: 400; color: var(--sage-deep); }
+
+:global(html[lang="ru"]) .heroCopy h1 {
+  font-size: clamp(34px, 3.4vw, 50px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+:global(html[lang="hi"]) .heroCopy h1 {
+  font-size: clamp(38px, 3.8vw, 56px);
+  line-height: 1.2;
+}
+
+:global(html[lang="ar"]) .heroCopy h1 {
+  font-size: clamp(36px, 3.6vw, 54px);
+  line-height: 1.25;
+}
 .introduction { font-size: 16px; line-height: 1.85; color: var(--text); max-width: 455px; margin: 29px 0 0; }
 .heroActions { display: flex; align-items: center; gap: 25px; margin-top: 33px; }
 .doctorLink { display: inline-flex; align-items: center; gap: 13px; color: var(--blue-deep); font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
@@ -138,7 +156,7 @@
 
 @media (max-width: 1150px) {
   .container { width: calc(100% - 56px); }
-  .navigation { gap: 20px; margin-right: 0; }
+  .navigation { gap: 20px; margin-inline: auto; }
   .headerInner { gap: 22px; }
   .heroGrid { gap: 34px; }
   .heroCopy h1 { font-size: 5.2vw; }
@@ -211,6 +229,7 @@
     .dropdownOpen .dropdownPanel { display: block; }
   }
   .navigation .mobileAppointment { display: flex; margin-top: 15px; color: white; }
+  .mobileLanguageWrapper { display: flex; margin-top: 10px; margin-bottom: 4px; }
   .heroGrid { grid-template-columns: 1fr; gap: 0; }
   .heroCopy { padding: 51px 0 38px; }
   .eyebrow { font-size: 9px; gap: 11px; margin-bottom: 24px; }

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -19,6 +20,7 @@ import SiteFooter from "./SiteFooter";
 import AppointmentSection, { scrollToId } from "./AppointmentSection";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import styles from "./AboutPage.module.css";
+import { useI18n } from "./I18nProvider";
 
 const highlights = [
   { value: "35+", label: "Years in medical oncology" },
@@ -109,6 +111,7 @@ const principles = [
 ];
 
 export default function AboutPage() {
+  const { t } = useI18n();
   useScrollReveal();
 
   return (
@@ -121,24 +124,22 @@ export default function AboutPage() {
             <div className={`${styles.heroCopy} reveal-left`}>
               <p className={styles.eyebrow}>
                 <span />
-                ABOUT THE DOCTOR
+                {t("ABOUT THE DOCTOR")}
               </p>
               <h1 id="about-hero-title">
-                A lifetime devoted to
+                {t("A lifetime devoted to")}
                 <br />
-                <em>cancer care.</em>
+                <em>{t("cancer care.")}</em>
               </h1>
               <p className={styles.lead}>
-                Dr. (Brig.) A. K. Dhar is Clinical Director and Head of Medical Oncology at Marengo Asia Hospitals,
-                Gurugram — bringing more than three decades of experience, military discipline, and a calm bedside
-                manner to every consultation.
+                {t("Dr. (Brig.) A. K. Dhar is Clinical Director and Head of Medical Oncology at Marengo Asia Hospitals, Gurugram — bringing more than three decades of experience, military discipline, and a calm bedside manner to every consultation.")}
               </p>
               <div className={styles.heroActions}>
                 <a className={styles.primaryButton} href="#appointment" onClick={(event) => scrollToId("appointment", event)}>
-                  Book an appointment <ArrowUpRight size={18} strokeWidth={1.7} />
+                  {t("Book an appointment")} <ArrowUpRight size={18} strokeWidth={1.7} />
                 </a>
                 <a className={styles.textLink} href="#story" onClick={(event) => scrollToId("story", event)}>
-                  Read his story
+                  {t("Read his story")}
                   <span>
                     <ArrowRight size={17} strokeWidth={1.5} />
                   </span>
@@ -150,7 +151,7 @@ export default function AboutPage() {
               <div className={styles.heroHalo} aria-hidden="true" />
               <Image
                 src="/images/dr-ak-dhar-consultation.png"
-                alt="Dr. (Brig.) A. K. Dhar in clinic"
+                alt={t("Dr. (Brig.) A. K. Dhar in clinic")}
                 width={787}
                 height={802}
                 priority
@@ -159,20 +160,20 @@ export default function AboutPage() {
               <aside className={styles.heroBadge}>
                 <Medal size={22} strokeWidth={1.5} />
                 <div>
-                  <strong>Vishisht Seva Medal</strong>
-                  <span>President of India, 2011</span>
+                  <strong>{t("Vishisht Seva Medal")}</strong>
+                  <span>{t("President of India, 2011")}</span>
                 </div>
               </aside>
             </div>
           </div>
         </section>
 
-        <section className={styles.stats} aria-label="Practice highlights">
+        <section className={styles.stats} aria-label={t("Practice highlights")}>
           <div className={`${styles.container} ${styles.statsGrid}`}>
             {highlights.map((item, index) => (
               <div key={item.label} className={`reveal-scale reveal-delay-${index + 1}`}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
+                <strong dir="ltr">{item.value}</strong>
+                <span>{t(item.label)}</span>
               </div>
             ))}
           </div>
@@ -181,40 +182,35 @@ export default function AboutPage() {
         <section className={styles.story} id="story" aria-labelledby="story-title">
           <div className={`${styles.container} ${styles.storyGrid}`}>
             <div className={`${styles.storyIntro} reveal-left`}>
-              <span className={styles.kicker}>HIS JOURNEY</span>
+              <span className={styles.kicker}>{t("HIS JOURNEY")}</span>
               <h2 id="story-title">
-                Experience forged in
+                {t("Experience forged in")}
                 <br />
-                <em>service and scholarship.</em>
+                <em>{t("service and scholarship.")}</em>
               </h2>
             </div>
             <div className={`${styles.storyCopy} reveal-right`}>
               <p>
-                A post-doctoral fellow from Tata Memorial Hospital, Mumbai, Dr. Dhar has spent over 35 years caring for
-                people with solid tumours and blood cancers. His career spans the Armed Forces Medical Services and
-                leading civilian oncology centres across India.
+                {t("A post-doctoral fellow from Tata Memorial Hospital, Mumbai, Dr. Dhar has spent over 35 years caring for people with solid tumours and blood cancers. His career spans the Armed Forces Medical Services and leading civilian oncology centres across India.")}
               </p>
               <p>
-                He helped establish premier oncology programmes — including at Army Hospital (R&R), Delhi — and was
-                honoured with the Vishisht Seva Medal by the President of India for distinguished service. Today, he
-                continues that same standard of care at Marengo Asia Hospitals, Gurugram.
+                {t("He helped establish premier oncology programmes — including at Army Hospital (R&R), Delhi — and was honoured with the Vishisht Seva Medal by the President of India for distinguished service. Today, he continues that same standard of care at Marengo Asia Hospitals, Gurugram.")}
               </p>
               <p>
-                Beyond the clinic, he mentors postgraduate and DNB oncology trainees, believing that excellent cancer
-                care is multiplied when knowledge is shared with the next generation of doctors.
+                {t("Beyond the clinic, he mentors postgraduate and DNB oncology trainees, believing that excellent cancer care is multiplied when knowledge is shared with the next generation of doctors.")}
               </p>
               <ul className={styles.storyPoints}>
                 <li>
                   <Check size={16} strokeWidth={2} />
-                  Post-doctoral fellow, Tata Memorial Hospital
+                  {t("Post-doctoral fellow, Tata Memorial Hospital")}
                 </li>
                 <li>
                   <Check size={16} strokeWidth={2} />
-                  Armed Forces leadership in oncology services
+                  {t("Armed Forces leadership in oncology services")}
                 </li>
                 <li>
                   <Check size={16} strokeWidth={2} />
-                  Mentor across MD &amp; DNB oncology programmes
+                  {t("Mentor across MD & DNB oncology programmes")}
                 </li>
               </ul>
             </div>
@@ -224,11 +220,11 @@ export default function AboutPage() {
         <section className={styles.credentials} aria-labelledby="credentials-title">
           <div className={styles.container}>
             <div className={`${styles.sectionHead} reveal`}>
-              <span className={styles.kicker}>TRAINING &amp; CAREER</span>
+              <span className={styles.kicker}>{t("TRAINING & CAREER")}</span>
               <h2 id="credentials-title">
-                Foundations that shape
+                {t("Foundations that shape")}
                 <br />
-                <em>every consultation.</em>
+                <em>{t("every consultation.")}</em>
               </h2>
             </div>
 
@@ -236,13 +232,13 @@ export default function AboutPage() {
               <div className={`${styles.credentialCard} reveal-left`}>
                 <div className={styles.cardLabel}>
                   <GraduationCap size={20} strokeWidth={1.6} />
-                  Education
+                  {t("Education")}
                 </div>
                 <ol className={styles.eduList}>
                   {education.map((item) => (
                     <li key={item.title}>
-                      <strong>{item.title}</strong>
-                      <span>{item.place}</span>
+                      <strong>{t(item.title)}</strong>
+                      <span>{t(item.place)}</span>
                     </li>
                   ))}
                 </ol>
@@ -251,14 +247,14 @@ export default function AboutPage() {
               <div className={`${styles.credentialCard} reveal-right`}>
                 <div className={styles.cardLabel}>
                   <Hospital size={20} strokeWidth={1.6} />
-                  Selected experience
+                  {t("Selected experience")}
                 </div>
                 <ol className={styles.careerList}>
                   {career.map((item) => (
                     <li key={item.role}>
-                      <strong>{item.role}</strong>
-                      <span>{item.place}</span>
-                      {item.note ? <small>{item.note}</small> : null}
+                      <strong>{t(item.role)}</strong>
+                      <span>{t(item.place)}</span>
+                      {item.note ? <small>{t(item.note)}</small> : null}
                     </li>
                   ))}
                 </ol>
@@ -270,21 +266,21 @@ export default function AboutPage() {
         <section className={styles.focus} aria-labelledby="focus-title">
           <div className={styles.container}>
             <div className={`${styles.sectionHead} reveal`}>
-              <span className={styles.kicker}>AREAS OF FOCUS</span>
+              <span className={styles.kicker}>{t("AREAS OF FOCUS")}</span>
               <h2 id="focus-title">
-                Where deep expertise
+                {t("Where deep expertise")}
                 <br />
-                <em>meets personal care.</em>
+                <em>{t("meets personal care.")}</em>
               </h2>
-              <p>From first diagnosis to complex pathways, care is tailored to the person — not only the disease.</p>
+              <p>{t("From first diagnosis to complex pathways, care is tailored to the person — not only the disease.")}</p>
             </div>
 
             <div className={styles.focusGrid}>
               {focusAreas.map((item, index) => (
                 <article key={item.title} className={`reveal reveal-delay-${(index % 4) + 1}`}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
+                  <h3>{t(item.title)}</h3>
+                  <p>{t(item.detail)}</p>
                 </article>
               ))}
             </div>
@@ -294,15 +290,14 @@ export default function AboutPage() {
         <section className={styles.recognition} aria-labelledby="recognition-title">
           <div className={`${styles.container} ${styles.recognitionGrid}`}>
             <div className={`${styles.recognitionIntro} reveal-left`}>
-              <span className={styles.kickerLight}>RECOGNITION</span>
+              <span className={styles.kickerLight}>{t("RECOGNITION")}</span>
               <h2 id="recognition-title">
-                Honours that reflect
+                {t("Honours that reflect")}
                 <br />
-                <em>a life of service.</em>
+                <em>{t("a life of service.")}</em>
               </h2>
               <p>
-                From military commendations to national oncology awards, these milestones mark a career devoted to
-                patients, teaching, and building stronger cancer programmes.
+                {t("From military commendations to national oncology awards, these milestones mark a career devoted to patients, teaching, and building stronger cancer programmes.")}
               </p>
               <div className={styles.recognitionIcons}>
                 <Award size={22} strokeWidth={1.5} />
@@ -314,7 +309,7 @@ export default function AboutPage() {
               {recognitions.map((item, index) => (
                 <li key={item}>
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  {item}
+                  {t(item)}
                 </li>
               ))}
             </ul>
@@ -324,11 +319,11 @@ export default function AboutPage() {
         <section className={styles.principles} aria-labelledby="principles-title">
           <div className={styles.container}>
             <div className={`${styles.sectionHead} reveal`}>
-              <span className={styles.kicker}>HOW HE CARES</span>
+              <span className={styles.kicker}>{t("HOW HE CARES")}</span>
               <h2 id="principles-title">
-                A philosophy built on
+                {t("A philosophy built on")}
                 <br />
-                <em>trust and time.</em>
+                <em>{t("trust and time.")}</em>
               </h2>
             </div>
             <div className={styles.principlesGrid}>
@@ -339,8 +334,8 @@ export default function AboutPage() {
                     <span className={styles.principleIcon}>
                       <Icon size={22} strokeWidth={1.55} />
                     </span>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
+                    <h3>{t(item.title)}</h3>
+                    <p>{t(item.text)}</p>
                   </article>
                 );
               })}
@@ -351,20 +346,20 @@ export default function AboutPage() {
         <section className={styles.cta} aria-labelledby="about-cta-title">
           <div className={`${styles.container} ${styles.ctaInner} reveal`}>
             <div>
-              <span className={styles.kicker}>NEXT STEP</span>
+              <span className={styles.kicker}>{t("NEXT STEP")}</span>
               <h2 id="about-cta-title">
-                Ready for a conversation
+                {t("Ready for a conversation")}
                 <br />
-                <em>about your care?</em>
+                <em>{t("about your care?")}</em>
               </h2>
-              <p>Share a few details with the clinic team, or call the appointment desk directly.</p>
+              <p>{t("Share a few details with the clinic team, or call the appointment desk directly.")}</p>
             </div>
             <div className={styles.ctaActions}>
               <a className={styles.primaryButton} href="#appointment" onClick={(event) => scrollToId("appointment", event)}>
-                Request an appointment <ArrowUpRight size={18} />
+                {t("Request an appointment")} <ArrowUpRight size={18} />
               </a>
               <a className={styles.secondaryButton} href="tel:+919810818266">
-                Call +91 98108 18266
+                {t("Call +91 98108 18266")}
               </a>
             </div>
           </div>
@@ -377,3 +372,4 @@ export default function AboutPage() {
     </>
   );
 }
+

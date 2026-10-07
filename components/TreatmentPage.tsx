@@ -17,6 +17,7 @@ import SiteFooter from "./SiteFooter";
 import AppointmentSection from "./AppointmentSection";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import styles from "./TreatmentPage.module.css";
+import { useI18n } from "./I18nProvider";
 
 const toc = [
   ["overview", "Overview"],
@@ -33,6 +34,7 @@ const toc = [
 type Props = { treatment: Treatment };
 
 export default function TreatmentPage({ treatment }: Props) {
+  const { t, localizeHref } = useI18n();
   useScrollReveal();
   const [openFaq, setOpenFaq] = useState(0);
   const [checked, setChecked] = useState<Record<number, boolean>>({});
@@ -51,17 +53,17 @@ export default function TreatmentPage({ treatment }: Props) {
         <section className={styles.hero} aria-labelledby="treatment-title">
           <div className={styles.container}>
             <div className={`${styles.heroCopy} reveal`}>
-              <p className={styles.readTime}>{treatment.readTime}</p>
+              <p className={styles.readTime}>{t(treatment.readTime)}</p>
               <h1 id="treatment-title">
-                {treatment.headline} <em>{treatment.headlineAccent}</em>
+                {t(treatment.headline)} <em>{t(treatment.headlineAccent)}</em>
               </h1>
-              <p className={styles.summary}>{treatment.summary}</p>
+              <p className={styles.summary}>{t(treatment.summary)}</p>
             </div>
 
             <div className={`${styles.heroMedia} reveal reveal-delay-1`}>
               <Image
                 src={treatment.image}
-                alt={treatment.imageAlt}
+                alt={t(treatment.imageAlt)}
                 fill
                 priority
                 sizes="(max-width: 900px) 100vw, 1100px"
@@ -71,16 +73,16 @@ export default function TreatmentPage({ treatment }: Props) {
           </div>
         </section>
 
-        <nav className={styles.toc} aria-label="On this page">
+        <nav className={styles.toc} aria-label={t("On this page")}>
           <div className={styles.container}>
             <div className={styles.tocTrack}>
               {toc.map(([id, label]) => (
                 <a key={id} href={`#${id}`}>
-                  {label}
+                  {t(label)}
                 </a>
               ))}
-              <Link href="/contact" className={styles.tocCta}>
-                Book appointment
+              <Link href={localizeHref("/contact")} className={styles.tocCta}>
+                {t("Book appointment")}
               </Link>
             </div>
           </div>
@@ -91,47 +93,47 @@ export default function TreatmentPage({ treatment }: Props) {
             <div className={styles.layout}>
               <div className={styles.content}>
                 <section id="overview" className={`${styles.block} reveal`}>
-                  <span className={styles.kicker}>OVERVIEW</span>
-                  <h2>{treatment.overview.title}</h2>
+                  <span className={styles.kicker}>{t("OVERVIEW")}</span>
+                  <h2>{t(treatment.overview.title)}</h2>
                   {treatment.overview.paragraphs.map((p) => (
-                    <p key={p.slice(0, 24)}>{p}</p>
+                    <p key={p.slice(0, 24)}>{t(p)}</p>
                   ))}
                 </section>
 
                 <section id="symptoms" className={`${styles.block} reveal`}>
-                  <span className={styles.kicker}>SYMPTOMS</span>
-                  <h2>{treatment.symptoms.title}</h2>
-                  {treatment.symptoms.intro ? <p>{treatment.symptoms.intro}</p> : null}
+                  <span className={styles.kicker}>{t("SYMPTOMS")}</span>
+                  <h2>{t(treatment.symptoms.title)}</h2>
+                  {treatment.symptoms.intro ? <p>{t(treatment.symptoms.intro)}</p> : null}
                   <ul className={styles.bulletList}>
                     {treatment.symptoms.items.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item}>{t(item)}</li>
                     ))}
                   </ul>
-                  {treatment.symptoms.note ? <p className={styles.note}>{treatment.symptoms.note}</p> : null}
+                  {treatment.symptoms.note ? <p className={styles.note}>{t(treatment.symptoms.note)}</p> : null}
                 </section>
 
                 <section id="consult" className={`${styles.block} reveal`}>
-                  <span className={styles.kicker}>WHEN TO CONSULT</span>
-                  <h2>{treatment.whenToConsult.title}</h2>
+                  <span className={styles.kicker}>{t("WHEN TO CONSULT")}</span>
+                  <h2>{t(treatment.whenToConsult.title)}</h2>
                   <ul className={styles.checkList}>
                     {treatment.whenToConsult.items.map((item) => (
                       <li key={item}>
                         <Check size={16} strokeWidth={2} />
-                        <span>{item}</span>
+                        <span>{t(item)}</span>
                       </li>
                     ))}
                   </ul>
                 </section>
 
                 <section id="diagnosis" className={`${styles.block} reveal`}>
-                  <span className={styles.kicker}>DIAGNOSIS</span>
-                  <h2>{treatment.diagnosis.title}</h2>
-                  {treatment.diagnosis.intro ? <p>{treatment.diagnosis.intro}</p> : null}
+                  <span className={styles.kicker}>{t("DIAGNOSIS")}</span>
+                  <h2>{t(treatment.diagnosis.title)}</h2>
+                  {treatment.diagnosis.intro ? <p>{t(treatment.diagnosis.intro)}</p> : null}
                   <ol className={styles.numberedList}>
                     {treatment.diagnosis.items.map((item, index) => (
                       <li key={item}>
                         <span>{String(index + 1).padStart(2, "0")}</span>
-                        {item}
+                        {t(item)}
                       </li>
                     ))}
                   </ol>
@@ -139,9 +141,9 @@ export default function TreatmentPage({ treatment }: Props) {
 
                 <section id="checklist" className={`${styles.checklistSection} reveal`}>
                   <div className={styles.checklistHead}>
-                    <span className={styles.kicker}>QUICK CHECK</span>
-                    <h2>{treatment.checklist.title}</h2>
-                    <p>{treatment.checklist.subtitle}</p>
+                    <span className={styles.kicker}>{t("QUICK CHECK")}</span>
+                    <h2>{t(treatment.checklist.title)}</h2>
+                    <p>{t(treatment.checklist.subtitle)}</p>
                   </div>
                   <div className={styles.checklistGrid}>
                     {treatment.checklist.items.map((item, index) => {
@@ -155,43 +157,43 @@ export default function TreatmentPage({ treatment }: Props) {
                           onClick={() => setChecked((prev) => ({ ...prev, [index]: !prev[index] }))}
                         >
                           <span className={styles.checkBox}>{on ? <Check size={14} strokeWidth={2.4} /> : null}</span>
-                          {item}
+                          {t(item)}
                         </button>
                       );
                     })}
                   </div>
                   <div className={styles.checklistResult}>
                     {checkedCount === 0 ? (
-                      <p>Select anything that applies — then book a visit to review reports together.</p>
+                      <p>{t("Select anything that applies — then book a visit to review reports together.")}</p>
                     ) : (
                       <p>
-                        <strong>{checkedCount}</strong> selected. A consultation can help turn these into a clear next step.
+                        <strong>{checkedCount}</strong> {t("selected. A consultation can help turn these into a clear next step.")}
                       </p>
                     )}
-                    <Link href="/contact" className={styles.primaryBtn}>
-                      Book appointment <ArrowUpRight size={16} />
+                    <Link href={localizeHref("/contact")} className={styles.primaryBtn}>
+                      {t("Book appointment")} <ArrowUpRight size={16} />
                     </Link>
                   </div>
                 </section>
 
                 <section id="approach" className={`${styles.block} reveal`}>
-                  <span className={styles.kicker}>TREATMENT OPTIONS</span>
-                  <h2>{treatment.approach.title}</h2>
-                  <p>{treatment.approach.intro}</p>
+                  <span className={styles.kicker}>{t("TREATMENT OPTIONS")}</span>
+                  <h2>{t(treatment.approach.title)}</h2>
+                  <p>{t(treatment.approach.intro)}</p>
                   <div className={styles.optionGrid}>
                     {treatment.approach.options.map((option) => (
                       <article key={option.title}>
-                        <h3>{option.title}</h3>
-                        <p>{option.detail}</p>
+                        <h3>{t(option.title)}</h3>
+                        <p>{t(option.detail)}</p>
                       </article>
                     ))}
                   </div>
                 </section>
 
                 <section id="journey" className={`${styles.journeySection} reveal`}>
-                  <span className={styles.kicker}>CARE PATH</span>
-                  <h2>{treatment.journey.title}</h2>
-                  <div className={styles.journeyTabs} role="tablist" aria-label="Care steps">
+                  <span className={styles.kicker}>{t("CARE PATH")}</span>
+                  <h2>{t(treatment.journey.title)}</h2>
+                  <div className={styles.journeyTabs} role="tablist" aria-label={t("Care steps")}>
                     {treatment.journey.steps.map((step, index) => (
                       <button
                         key={step.label}
@@ -201,20 +203,20 @@ export default function TreatmentPage({ treatment }: Props) {
                         className={journeyStep === index ? styles.journeyTabActive : undefined}
                         onClick={() => setJourneyStep(index)}
                       >
-                        {step.label} {step.title}
+                        {t(step.label)} {t(step.title)}
                       </button>
                     ))}
                   </div>
                   <div className={styles.journeyPanel} role="tabpanel">
-                    <span>{treatment.journey.steps[journeyStep].label}</span>
-                    <h3>{treatment.journey.steps[journeyStep].title}</h3>
-                    <p>{treatment.journey.steps[journeyStep].detail}</p>
+                    <span>{t(treatment.journey.steps[journeyStep].label)}</span>
+                    <h3>{t(treatment.journey.steps[journeyStep].title)}</h3>
+                    <p>{t(treatment.journey.steps[journeyStep].detail)}</p>
                   </div>
                 </section>
 
                 <section id="timeline" className={`${styles.block} reveal`}>
-                  <span className={styles.kicker}>BEFORE, DURING & AFTER</span>
-                  <h2>What to prepare and expect</h2>
+                  <span className={styles.kicker}>{t("BEFORE, DURING & AFTER")}</span>
+                  <h2>{t("What to prepare and expect")}</h2>
                   <div className={styles.timelineTabs} role="tablist">
                     {(
                       [
@@ -231,7 +233,7 @@ export default function TreatmentPage({ treatment }: Props) {
                         className={timelineTab === key ? styles.timelineTabActive : undefined}
                         onClick={() => setTimelineTab(key)}
                       >
-                        {label}
+                        {t(label)}
                       </button>
                     ))}
                   </div>
@@ -239,15 +241,15 @@ export default function TreatmentPage({ treatment }: Props) {
                     {timelineItems.map((item) => (
                       <li key={item}>
                         <Check size={16} strokeWidth={2} />
-                        <span>{item}</span>
+                        <span>{t(item)}</span>
                       </li>
                     ))}
                   </ul>
                 </section>
 
                 <section id="faqs" className={`${styles.faqSection} reveal`}>
-                  <span className={styles.kicker}>FAQS</span>
-                  <h2>Frequently asked questions</h2>
+                  <span className={styles.kicker}>{t("FAQS")}</span>
+                  <h2>{t("Frequently asked questions")}</h2>
                   <div className={styles.faqList}>
                     {treatment.faqs.map(([question, answer], index) => {
                       const open = openFaq === index;
@@ -258,11 +260,11 @@ export default function TreatmentPage({ treatment }: Props) {
                             aria-expanded={open}
                             onClick={() => setOpenFaq(open ? -1 : index)}
                           >
-                            <span>{question}</span>
+                            <span>{t(question)}</span>
                             <ChevronDown size={18} />
                           </button>
                           <div className={styles.faqAnswer} data-open={open}>
-                            <p>{answer}</p>
+                            <p>{t(answer)}</p>
                           </div>
                         </div>
                       );
@@ -273,11 +275,11 @@ export default function TreatmentPage({ treatment }: Props) {
 
               <aside className={`${styles.aside} reveal reveal-delay-1`}>
                 <div className={styles.asideCard}>
-                  <span>NEED GUIDANCE?</span>
-                  <strong>{treatment.shortTitle}</strong>
-                  <p>Review reports and next steps with Dr. (Brig.) A. K. Dhar at Marengo Asia Hospitals, Gurugram.</p>
+                  <span>{t("NEED GUIDANCE?")}</span>
+                  <strong>{t(treatment.shortTitle)}</strong>
+                  <p>{t("Review reports and next steps with Dr. (Brig.) A. K. Dhar at Marengo Asia Hospitals, Gurugram.")}</p>
                   <a href="tel:+919810818266" className={styles.asidePrimary}>
-                    <Phone size={16} /> Call +91 98108 18266
+                    <Phone size={16} /> {t("Call +91 98108 18266")}
                   </a>
                   <a
                     href="https://wa.me/919810818266"
@@ -287,21 +289,21 @@ export default function TreatmentPage({ treatment }: Props) {
                   >
                     <MessageCircle size={16} /> WhatsApp
                   </a>
-                  <Link href="/contact" className={styles.asideLink}>
-                    Book appointment <ArrowUpRight size={14} />
+                  <Link href={localizeHref("/contact")} className={styles.asideLink}>
+                    {t("Book appointment")} <ArrowUpRight size={14} />
                   </Link>
                 </div>
 
                 <div className={styles.asideRelated}>
-                  <span>RELATED CARE</span>
+                  <span>{t("RELATED CARE")}</span>
                   {related.map((item) => (
-                    <Link key={item.slug} href={`/treatments/${item.slug}`}>
-                      {item.shortTitle}
+                    <Link key={item.slug} href={localizeHref(`/treatments/${item.slug}`)}>
+                      {t(item.shortTitle)}
                       <ArrowUpRight size={14} />
                     </Link>
                   ))}
-                  <Link href="/treatments" className={styles.asideAll}>
-                    All treatments
+                  <Link href={localizeHref("/treatments")} className={styles.asideAll}>
+                    {t("All treatments")}
                   </Link>
                 </div>
               </aside>
@@ -315,3 +317,4 @@ export default function TreatmentPage({ treatment }: Props) {
     </>
   );
 }
+

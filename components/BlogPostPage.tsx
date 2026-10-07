@@ -10,20 +10,22 @@ import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import styles from "./BlogPage.module.css";
+import { useI18n } from "./I18nProvider";
 
 type Props = { post: BlogPost };
 
 export default function BlogPostPage({ post }: Props) {
+  const { t, localizeHref } = useI18n();
   useScrollReveal();
   const [activeId, setActiveId] = useState("overview");
   const [openFaq, setOpenFaq] = useState(0);
   const related = blogs.filter((item) => item.slug !== post.slug).slice(0, 2);
 
   const toc = [
-    { id: "overview", label: "Overview" },
-    ...post.sections.map((section) => ({ id: section.id, label: section.heading })),
-    { id: "takeaway", label: "Key takeaway" },
-    { id: "faqs", label: "FAQs" },
+    { id: "overview", label: t("Overview") },
+    ...post.sections.map((section) => ({ id: section.id, label: t(section.heading) })),
+    { id: "takeaway", label: t("Key takeaway") },
+    { id: "faqs", label: t("FAQs") },
   ];
 
   useEffect(() => {
@@ -68,23 +70,23 @@ export default function BlogPostPage({ post }: Props) {
           <header className={styles.postHero}>
             <div className={styles.container}>
               <div className={`${styles.postHeroInner} reveal`}>
-                <Link href="/blogs" className={styles.backLink}>
+                <Link href={localizeHref("/blogs")} className={styles.backLink}>
                   <ArrowLeft size={15} strokeWidth={1.8} />
-                  All blogs
+                  {t("All blogs")}
                 </Link>
                 <div className={styles.metaRow}>
-                  <strong>{post.category.toUpperCase()}</strong>
-                  <span>{post.dateLabel}</span>
-                  <span>{post.readTime}</span>
+                  <strong>{t(post.category.toUpperCase())}</strong>
+                  <span>{t(post.dateLabel)}</span>
+                  <span>{t(post.readTime)}</span>
                 </div>
-                <h1>{post.title}</h1>
-                <p className={styles.postLead}>{post.excerpt}</p>
+                <h1>{t(post.title)}</h1>
+                <p className={styles.postLead}>{t(post.excerpt)}</p>
               </div>
 
               <div className={`${styles.postMedia} reveal reveal-delay-1`}>
                 <Image
                   src={post.image}
-                  alt={post.imageAlt}
+                  alt={t(post.imageAlt)}
                   fill
                   priority
                   sizes="(max-width: 900px) 100vw, 1100px"
@@ -96,8 +98,8 @@ export default function BlogPostPage({ post }: Props) {
           <div className={styles.postBody}>
             <div className={styles.container}>
               <div className={styles.postLayout}>
-                <nav className={`${styles.tocNav} reveal`} aria-label="Article sections">
-                  <span className={styles.tocLabel}>ON THIS PAGE</span>
+                <nav className={`${styles.tocNav} reveal`} aria-label={t("Article sections")}>
+                  <span className={styles.tocLabel}>{t("ON THIS PAGE")}</span>
                   {toc.map((item) => (
                     <a
                       key={item.id}
@@ -109,29 +111,29 @@ export default function BlogPostPage({ post }: Props) {
                   ))}
 
                   <div className={styles.tocCta}>
-                    <span>Questions about your reports?</span>
-                    <Link href="/contact">
-                      Book appointment <ArrowUpRight size={14} />
+                    <span>{t("Questions about your reports?")}</span>
+                    <Link href={localizeHref("/contact")}>
+                      {t("Book appointment")} <ArrowUpRight size={14} />
                     </Link>
                   </div>
                 </nav>
 
                 <div className={`${styles.article} reveal reveal-delay-1`}>
                   <section id="overview" className={styles.overview}>
-                    <h2>Overview</h2>
-                    <p>{post.intro}</p>
+                    <h2>{t("Overview")}</h2>
+                    <p>{t(post.intro)}</p>
                   </section>
 
                   {post.sections.map((section) => (
                     <section key={section.id} id={section.id} className={styles.section}>
-                      <h2>{section.heading}</h2>
+                      <h2>{t(section.heading)}</h2>
                       {section.paragraphs.map((paragraph) => (
-                        <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+                        <p key={paragraph.slice(0, 32)}>{t(paragraph)}</p>
                       ))}
                       {section.bullets ? (
                         <ul>
                           {section.bullets.map((item) => (
-                            <li key={item}>{item}</li>
+                            <li key={item}>{t(item)}</li>
                           ))}
                         </ul>
                       ) : null}
@@ -139,13 +141,13 @@ export default function BlogPostPage({ post }: Props) {
                   ))}
 
                   <div id="takeaway" className={styles.takeaway}>
-                    <span>KEY TAKEAWAY</span>
-                    <p>{post.takeaway}</p>
+                    <span>{t("KEY TAKEAWAY")}</span>
+                    <p>{t(post.takeaway)}</p>
                   </div>
 
                   <section id="faqs" className={styles.faqSection}>
-                    <span className={styles.kicker}>FAQS</span>
-                    <h2>Frequently asked questions</h2>
+                    <span className={styles.kicker}>{t("FAQS")}</span>
+                    <h2>{t("Frequently asked questions")}</h2>
                     <div className={styles.faqList}>
                       {post.faqs.map(([question, answer], index) => {
                         const open = openFaq === index;
@@ -156,11 +158,11 @@ export default function BlogPostPage({ post }: Props) {
                               aria-expanded={open}
                               onClick={() => setOpenFaq(open ? -1 : index)}
                             >
-                              <span>{question}</span>
+                              <span>{t(question)}</span>
                               <ChevronDown size={18} />
                             </button>
                             <div className={styles.faqAnswer} data-open={open}>
-                              <p>{answer}</p>
+                              <p>{t(answer)}</p>
                             </div>
                           </div>
                         );
@@ -169,14 +171,14 @@ export default function BlogPostPage({ post }: Props) {
                   </section>
 
                   <div className={styles.relatedBlock}>
-                    <span className={styles.kicker}>MORE TO READ</span>
+                    <span className={styles.kicker}>{t("MORE TO READ")}</span>
                     <div className={styles.relatedGrid}>
                       {related.map((item) => (
-                        <Link key={item.slug} href={`/blogs/${item.slug}`} className={styles.relatedCard}>
-                          <strong>{item.category}</strong>
-                          <span>{item.title}</span>
+                        <Link key={item.slug} href={localizeHref(`/blogs/${item.slug}`)} className={styles.relatedCard}>
+                          <strong>{t(item.category)}</strong>
+                          <span>{t(item.title)}</span>
                           <em>
-                            Read article <ArrowUpRight size={14} />
+                            {t("Read article")} <ArrowUpRight size={14} />
                           </em>
                         </Link>
                       ))}
@@ -192,3 +194,4 @@ export default function BlogPostPage({ post }: Props) {
     </>
   );
 }
+
