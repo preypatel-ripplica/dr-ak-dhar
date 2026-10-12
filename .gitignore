@@ -5,6 +5,7 @@ out/
 .env*
 !.env.example
 .DS_Store
-.cache/
+.cache/*
+!.cache/translation-memory.json
 
 prompt.md
