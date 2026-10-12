@@ -23,6 +23,221 @@ export type BlogPost = {
 
 export const blogs: BlogPost[] = [
   {
+    slug: "early-warning-signs-of-cancer",
+    title: "Early Warning Signs of Cancer You Should Never Ignore",
+    excerpt:
+      "Many cancers are more treatable when found early. Learn the common warning signs—from unexplained weight loss and persistent fatigue to lumps, bleeding, and changes in bowel habits—and when to see a cancer specialist.",
+    category: "Cancer Care",
+    date: "2026-10-05",
+    dateLabel: "5 Oct 2026",
+    readTime: "10 min read",
+    image: "/images/blogs/early-warning-signs-of-cancer.jpg",
+    imageAlt: "Doctor discussing early cancer warning signs with a patient",
+    intro:
+      "Cancer often develops quietly. In its early stages, symptoms may be mild, easy to dismiss, or mistaken for everyday illness. As a medical oncologist, I regularly meet patients who wish they had sought help sooner. Understanding the early warning signs of cancer does not mean every symptom is serious—but it does mean knowing when to get evaluated can make a meaningful difference in outcomes.",
+    sections: [
+      {
+        id: "why-early-detection-matters",
+        heading: "Why Early Detection Matters",
+        paragraphs: [
+          "When cancer is found at an early stage, treatment options are often broader and outcomes are generally better. Early-stage disease may be controlled with surgery, local therapy, or less intensive systemic treatment. Once cancer spreads to distant organs, care becomes more complex and goals may shift toward long-term control and quality of life.",
+          "Early detection is not only about screening tests such as mammograms, Pap smears, colonoscopy, or low-dose CT for selected high-risk smokers. It also depends on patients recognising persistent or unusual symptoms and seeking timely medical advice. Many people wait weeks or months hoping symptoms will settle on their own. That delay can allow a treatable problem to become harder to manage.",
+          "It is important to keep perspective. Most common symptoms—fatigue, cough, indigestion, or a temporary lump—are caused by non-cancer conditions. The goal is not panic, but awareness: if a symptom is new, unexplained, or lasting longer than expected, get it checked."
+        ],
+      },
+      {
+        id: "unexplained-weight-loss-and-loss-of-appetite",
+        heading: "Unexplained Weight Loss and Loss of Appetite",
+        paragraphs: [
+          "Losing weight without trying is one of the classic warning signs I discuss with patients. A drop of about 5% or more of body weight over a few months, without diet or exercise changes, deserves medical evaluation—especially when accompanied by poor appetite, early fullness, or digestive discomfort.",
+          "Unintentional weight loss can be linked to stomach, pancreas, lung, colorectal, and other cancers, but it also occurs with thyroid disease, diabetes, infections, and depression. The key is not to self-diagnose. A proper history, examination, and investigations help identify the cause.",
+          "If weight loss comes with night sweats, persistent fever, or severe fatigue, do not wait for it to resolve on its own. These combinations should prompt earlier consultation."
+        ],
+      },
+      {
+        id: "persistent-fatigue-and-weakness",
+        heading: "Persistent Fatigue and Weakness",
+        paragraphs: [
+          "Everyone feels tired at times. Cancer-related fatigue is different: it is often deep, ongoing, and not fully relieved by rest. Patients may describe reduced stamina, difficulty concentrating, or needing more sleep than usual.",
+          "Fatigue can result from anaemia, infection, poor nutrition, thyroid disorders, or medication side effects. In oncology, it may also be an early clue in blood cancers and some solid tumours. If tiredness lasts for several weeks without a clear reason, a basic blood work-up and clinical review are sensible next steps.",
+          "Women and men alike sometimes attribute extreme fatigue to stress or busy work schedules. Stress can cause exhaustion, but if fatigue is new, progressive, or paired with other warning signs, medical assessment is safer than assuming it will pass."
+        ],
+      },
+      {
+        id: "lumps-swellings-and-skin-changes",
+        heading: "Lumps, Swellings, and Skin Changes",
+        paragraphs: [
+          "A new lump in the breast, neck, armpit, groin, or soft tissues should always be examined. Not every lump is cancer—many are cysts, lipomas, or swollen lymph nodes from infection—but only a clinician can decide what needs imaging or biopsy.",
+          "Breast awareness matters for both women and men. Look for a new mass, nipple discharge, skin dimpling, or change in breast shape. Similarly, a mole that changes in size, colour, border, or starts bleeding needs dermatology or oncology evaluation for possible melanoma.",
+          "Non-healing sores on the skin, lips, or mouth lasting more than a few weeks also deserve attention, particularly in people with tobacco or alcohol use. Early head and neck cancers are often more treatable when found before they spread."
+        ],
+      },
+      {
+        id: "unusual-bleeding-or-discharge",
+        heading: "Unusual Bleeding or Discharge",
+        paragraphs: [
+          "Bleeding that is unexpected for your age or medical history should never be ignored. This includes blood in stool or black tarry stools, coughing up blood, blood in urine, postmenopausal vaginal bleeding, or persistent nipple discharge.",
+          "Rectal bleeding is commonly attributed to piles, but colorectal cancer can present the same way. Coughing blood may relate to infection or lung disease, yet lung cancer must be ruled out in smokers and older adults. Blood in urine can come from stones or infection, but bladder and kidney cancers are part of the differential diagnosis.",
+          "One episode may not mean cancer, but recurrent or unexplained bleeding needs prompt investigation rather than repeated self-treatment."
+        ],
+      },
+      {
+        id: "changes-in-bowel-or-bladder-habits",
+        heading: "Changes in Bowel or Bladder Habits",
+        paragraphs: [
+          "A lasting change in bowel habits—new constipation, diarrhoea, narrower stools, or a feeling of incomplete emptying—can be an early sign of colorectal cancer, especially after age 40–45 or with a family history. Similarly, difficulty starting urine, increased night-time urination, or pelvic discomfort may relate to prostate or bladder problems.",
+          "Digestive symptoms such as persistent indigestion, difficulty swallowing, or feeling full after small meals can be linked to stomach or oesophageal disease. These symptoms are common, which is why duration and associated red flags matter.",
+          "If symptoms continue beyond two to three weeks, or if they worsen, schedule a medical review. Screening colonoscopy, when indicated, remains one of the most effective tools for preventing and detecting colorectal cancer early."
+        ],
+      },
+      {
+        id: "persistent-cough-hoarseness-or-voice-change",
+        heading: "Persistent Cough, Hoarseness, or Voice Change",
+        paragraphs: [
+          "A cough lasting more than three weeks, especially with smoking history, chest pain, breathlessness, or weight loss, should be evaluated. Lung cancer, tuberculosis, and other serious lung diseases can present this way.",
+          "Hoarseness that does not settle may relate to laryngitis, reflux, or vocal cord strain—but persistent voice change can also be a sign of laryngeal or other head and neck cancers. People who use tobacco or alcohol heavily should be particularly careful not to delay ENT evaluation.",
+          "Imaging and endoscopy, when appropriately chosen, help distinguish infection from malignancy and guide next steps quickly."
+        ],
+      },
+      {
+        id: "when-to-consult-an-oncologist",
+        heading: "When to Consult an Oncologist",
+        paragraphs: [
+          "You do not need to see an oncologist for every symptom. Start with your primary physician or relevant specialist. An oncology consultation becomes important when imaging or biopsy suggests cancer, when you want a second opinion on a treatment plan, or when symptoms and investigations raise strong concern for malignancy.",
+          "Bring previous reports, pathology slides if available, medication lists, and a clear symptom timeline. Good questions include: What type and stage of cancer is this? What treatments are appropriate? What side effects should I expect? Are clinical trials or molecular tests relevant?",
+          "At Marengo Asia Hospitals, Gurugram, I help patients and families interpret findings and plan personalised care across solid tumours and blood cancers. Early conversation often reduces fear and clarifies realistic next steps.",
+          "If you have concerning symptoms, do not wait for certainty from the internet. Timely clinical evaluation is the safest path."
+        ],
+      }
+    ],
+    takeaway:
+      "Most warning signs are not cancer, but persistent unexplained symptoms deserve prompt medical evaluation—early detection improves treatment options.",
+    faqs: [
+      [
+        "Does every warning sign mean I have cancer?",
+        "No. Most common symptoms such as fatigue, cough, or digestive discomfort have non-cancer causes. Warning signs matter when they are new, unexplained, progressive, or lasting longer than expected. A doctor can decide which tests are needed."
+      ],
+      [
+        "How long should I wait before getting a symptom checked?",
+        "As a general guide, symptoms lasting more than two to three weeks without improvement deserve medical review sooner, especially with red flags such as unexplained weight loss, bleeding, a new lump, or difficulty swallowing."
+      ],
+      [
+        "Which cancers are commonly found early through symptoms or screening?",
+        "Breast, cervical, colorectal, prostate, and some lung cancers in high-risk groups are often detected earlier through screening or prompt evaluation of symptoms. Outcomes are generally better when disease is found before it spreads."
+      ],
+      [
+        "When should I see Dr. A. K. Dhar for a consultation?",
+        "Consider an oncology consultation after a cancer diagnosis, for a second opinion, or when investigations suggest malignancy. Bring prior reports so treatment options can be discussed clearly and without delay."
+      ]
+    ],
+  },
+  {
+    slug: "diet-and-nutrition-during-cancer-treatment",
+    title: "Diet and Nutrition During Cancer Treatment: A Practical Guide",
+    excerpt:
+      "Eating well during chemotherapy, immunotherapy, or other cancer treatment can support strength, recovery, and side-effect management. Learn practical food choices, what to avoid, and when to seek nutrition support.",
+    category: "Cancer Care",
+    date: "2026-10-04",
+    dateLabel: "4 Oct 2026",
+    readTime: "11 min read",
+    image: "/images/blogs/diet-and-nutrition-during-cancer-treatment.jpg",
+    imageAlt: "Healthy nutrition guidance for patients during cancer treatment",
+    intro:
+      "Nutrition will not replace cancer treatment, but it can support how patients feel and recover during therapy. Many people ask what they should eat during chemotherapy, whether sugar “feeds” cancer, or how to manage nausea and taste changes. As a medical oncologist, I encourage a practical, evidence-based approach: protect strength, maintain hydration, manage side effects, and avoid extreme diets that cause more harm than good.",
+    sections: [
+      {
+        id: "why-nutrition-matters-during-treatment",
+        heading: "Why Nutrition Matters During Treatment",
+        paragraphs: [
+          "Cancer and its treatments place extra demand on the body. Surgery, chemotherapy, immunotherapy, targeted therapy, and radiation can affect appetite, digestion, immunity, and muscle mass. Adequate protein and calories help preserve strength, support wound healing, and reduce treatment interruptions caused by weakness or severe weight loss.",
+          "Malnutrition is more common than many families realise. Some patients lose weight quickly; others gain weight from steroids or reduced activity. Both situations need attention. The right plan depends on cancer type, treatment schedule, co-existing illnesses such as diabetes or kidney disease, and individual side effects.",
+          "A registered dietitian familiar with oncology, working with your oncologist, is often the best partner for personalised advice. General tips help, but one diet does not fit every patient."
+        ],
+      },
+      {
+        id: "build-balanced-plates-with-enough-protein",
+        heading: "Build Balanced Plates with Enough Protein",
+        paragraphs: [
+          "During active treatment, many patients need more protein than usual to maintain muscle. Good sources include dals, beans, paneer, curd, eggs, fish, chicken, soy products, nuts, and seeds—chosen according to tolerance and medical advice.",
+          "Combine protein with easily digestible carbohydrates such as rice, roti, oats, fruits, and potatoes, plus colourful vegetables when the gut is settling. Healthy fats from ghee in moderation, olive oil, nuts, or avocado can help when appetite is low and calorie needs are high.",
+          "Small, frequent meals often work better than three large ones. If solid food is difficult, smoothies, soups, khichdi, porridge, and oral nutrition supplements recommended by your care team can bridge the gap."
+        ],
+        bullets: [
+          "Aim for a protein source at most meals and snacks",
+          "Prefer cooked, soft foods if mouth sores or nausea are present",
+          "Include fruits and vegetables when tolerated for vitamins and fibre",
+          "Use oral supplements only as advised by your doctor or dietitian"
+        ],
+      },
+      {
+        id: "managing-nausea-taste-changes-and-poor-appetite",
+        heading: "Managing Nausea, Taste Changes, and Poor Appetite",
+        paragraphs: [
+          "Nausea remains one of the most common chemotherapy-related complaints. Anti-nausea medicines prescribed by your oncologist should be taken as directed—not only after vomiting starts. Bland foods such as toast, bananas, rice, applesauce, curd, and clear soups are often easier on treatment days.",
+          "Taste changes can make favourite foods suddenly unpleasant. Cold or room-temperature foods may be better tolerated than strong-smelling hot meals. Tart flavours like lemon (if mouth sores are absent), mint, or mild spices can help some patients. Good oral hygiene also improves taste and reduces infection risk.",
+          "When appetite is poor, focus on nutrient-dense bites rather than forcing large portions. Sip fluids between meals instead of during them if early fullness is a problem. Report ongoing vomiting, inability to keep fluids down, or rapid weight loss promptly—these may need medical support, IV hydration, or temporary feeding assistance."
+        ],
+      },
+      {
+        id: "foods-and-habits-to-be-cautious-about",
+        heading: "Foods and Habits to Be Cautious About",
+        paragraphs: [
+          "There is no strong evidence that cutting out all sugar cures cancer. Completely eliminating carbohydrates can leave patients weak and underfed. That said, limiting sugary drinks and ultra-processed snacks is sensible for overall health and blood sugar control, especially if steroids are part of treatment.",
+          "Food safety matters when immunity is low. Wash produce well, cook meats and eggs thoroughly, avoid unpasteurised dairy, and be careful with street food or leftovers that have sat out. Your team may give stricter guidance during periods of very low white blood cell counts.",
+          "Alcohol can interact with medicines, worsen mouth irritation, and stress the liver. Tobacco should be stopped entirely. Herbal products, high-dose vitamins, and “immune boosters” sold online can interfere with chemotherapy or immunotherapy—always ask before starting any supplement."
+        ],
+      },
+      {
+        id: "hydration-and-side-effect-specific-tips",
+        heading: "Hydration and Side-Effect-Specific Tips",
+        paragraphs: [
+          "Staying hydrated supports kidney function, helps manage some treatment side effects, and reduces constipation risk. Water, oral rehydration solutions, coconut water, clear soups, and diluted juices are common options unless your doctor has fluid restrictions.",
+          "For diarrhoea, soft binding foods and electrolyte replacement may help, while high-fibre or very spicy meals are often paused temporarily. For constipation—common with pain medicines—fibre, fluids, and prescribed stool softeners are used carefully under guidance.",
+          "Mouth sores call for soft, non-acidic, lukewarm foods and gentle oral care. Difficulty swallowing needs urgent review before diet experiments. Each side effect has a tailored approach; tell your oncology team early rather than struggling silently."
+        ],
+      },
+      {
+        id: "special-situations-diabetes-vegetarian-diets-and-caregivers",
+        heading: "Special Situations: Diabetes, Vegetarian Diets, and Caregivers",
+        paragraphs: [
+          "Patients with diabetes need coordinated plans so cancer nutrition and glucose control both stay on track. Steroids can raise blood sugar; meal timing and medicines may need adjustment with your endocrinologist and oncologist.",
+          "Vegetarian and vegan diets can work well during treatment when protein intake is planned carefully using dals, dairy or fortified alternatives, soy, nuts, and grains. The issue is not vegetarian food itself—it is inadequate calories or protein when appetite falls.",
+          "Caregivers play a major role. Preparing small appealing meals, keeping snacks available, tracking weight weekly, and noting what the patient can tolerate helps the medical team intervene sooner. Emotional mealtime pressure (“finish everything”) often backfires; gentle encouragement works better."
+        ],
+      },
+      {
+        id: "practical-takeaways-for-patients-in-india",
+        heading: "Practical Takeaways for Patients in India",
+        paragraphs: [
+          "Familiar Indian home foods—khichdi, dal-rice, curd rice, soft rotis, boiled vegetables, buttermilk, eggs, and lightly spiced soups—are often excellent during treatment. You do not need expensive imported “superfoods.” Consistency and hygiene matter more than exotic ingredients.",
+          "During festival seasons or family gatherings, plan ahead: eat smaller portions of richer foods, stay hydrated, and avoid experimental detoxes or fasting trends unless cleared by your oncologist. Fasting can be unsafe for many patients on active therapy.",
+          "If you are under my care at Marengo Asia Hospitals, Gurugram, discuss nutrition concerns at clinic visits. We can involve dietetic support, adjust anti-nausea plans, and address weight changes before they affect treatment tolerance.",
+          "Remember: the best cancer diet is one you can actually eat, that maintains your strength, and that fits your treatment and medical conditions."
+        ],
+      }
+    ],
+    takeaway:
+      "Focus on adequate protein, hydration, food safety, and side-effect management—avoid extreme cancer diets and unproven supplements without medical advice.",
+    faqs: [
+      [
+        "Can diet cure cancer?",
+        "No. Nutrition supports strength and recovery but does not replace surgery, chemotherapy, immunotherapy, targeted therapy, or radiation. Extreme diets that cause weight loss can harm treatment tolerance."
+      ],
+      [
+        "Should I completely stop eating sugar?",
+        "You do not need to eliminate all carbohydrates. Limiting sugary drinks and ultra-processed sweets is helpful, but balanced meals with whole grains, proteins, and vegetables remain important for energy during treatment."
+      ],
+      [
+        "Are protein powders and supplements safe?",
+        "Some patients benefit from clinician-recommended oral nutrition supplements. High-dose vitamins, herbal products, and unverified “immune boosters” can interfere with treatment—always ask your oncologist first."
+      ],
+      [
+        "When should I seek urgent help for eating problems?",
+        "Seek prompt care if you cannot keep fluids down, are vomiting repeatedly, have severe mouth sores preventing intake, notice rapid weight loss, or feel dizzy and dehydrated. Early support prevents complications."
+      ]
+    ],
+  },
+  {
     slug: "marengo-asia-hospitals-best-cancer-specialist-dr-ak-dhar",
     title: "Marengo Asia Hospital's Best Cancer Specialist Dr. AK Dhar",
     excerpt: "A cancer diagnosis can change a person’s life within days. Patients and families often wonder where to seek treatment, which specialist to consult, and what treatment may be appropriate. Since every cancer is different, treatment must be tailored to the…",
